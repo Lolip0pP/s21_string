@@ -14,6 +14,7 @@ export LIBRARY_PATH=/opt/homebrew/lib
 Suite* s21_strlen_test(void);
 Suite* s21_memchr_test(void);
 Suite* s21_memcmp_test(void);
+Suite* s21_memcpy_test(void);
 
 
 #endif //CHECK_TEST_EXAMPLE_TEST_H

@@ -39,6 +39,17 @@ int flag = 0;
 	return flag;
 }
 
+void *s21_memcpy(void *dest, const void *src, size_t n){
+    char* str1 = (char*)dest;
+    const char* str2 = (const char*)src;
+
+    for (size_t i = 0; i < n; i++) {
+        str1[i] = str2[i];
+    }
+
+    return dest;
+}
+
 
 
 
