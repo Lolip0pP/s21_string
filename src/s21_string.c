@@ -22,7 +22,7 @@ void *s21_memchr(const void *str, int c, size_t n)
 }
 
 int s21_memcmp(const void *str1, const void *str2, size_t n){
-
+	
 int flag = 0;
 
 	if (n != 0) {
@@ -49,6 +49,21 @@ void *s21_memcpy(void *dest, const void *src, size_t n){
 
     return dest;
 }
+
+void *s21_memset(void *str, int c, size_t n){
+if (s21_strlen(str)>=n){
+unsigned char* tmp = (unsigned char*)str;
+
+for (size_t i = 0; i < n; i++) {
+tmp[i] = (unsigned char)c;
+}
+
+return str;
+}else
+return NULL;
+}
+
+
 
 
 

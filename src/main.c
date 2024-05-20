@@ -4,21 +4,26 @@
 #include <stdlib.h>
 
 int main(){
-    char string[100];
-    int length;
-    fgets(string,100,stdin);
+    char string[4] = "1234";
+    // int length;
+    // fgets(string,100,stdin);
 
-    printf("%p\n",  memcpy(string, "",1));
-    printf("%p\n",  s21_memcpy(string, "",1));
+  //  printf("%p\n",  memset(string,'0',5));
+   printf("%p\n",  s21_memset(string,'0',5));
+   printf("%s\n", string);
     return 0;
+
 }
-void *s21_memcpy(void *dest, const void *src, size_t n){
-    char* str1 = (char*)dest;
-    const char* str2 = (const char*)src;
 
-    for (size_t i = 0; i < n; i++) {
-        str1[i] = str2[i];
-    }
+void *s21_memset(void *str, int c, size_t n){
+if (s21_strlen(str)>=n){
+unsigned char* tmp = (unsigned char*)str;
 
-    return dest;
+for (size_t i = 0; i < n; i++) {
+tmp[i] = (unsigned char)c;
+}
+
+return str;
+}else
+return NULL;
 }
