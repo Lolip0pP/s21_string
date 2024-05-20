@@ -63,6 +63,30 @@ return str;
 return NULL;
 }
 
+// char *s21_strncat(char *dest, const char *src, size_t n){
+
+//    unsigned char len1 = s21_strlen(dest);
+//     unsigned char len2 = s21_strlen(src);
+    
+//     if (len2 < n) {
+// 	s21_strncpy(&dest[len1], src, len2);
+//     } else {
+// 	s21_strncpy(&dest[len1], src, n);
+// 	dest[len1 + n] = '\0';
+//     }
+//     return dest;
+// }
+
+char *s21_strncpy(char *dest, const char *src, size_t n){
+    char* start = dest;  
+
+    while (n != 0 && (*dest++ = *src++)) {
+       n--;
+    }
+
+    *dest = '\0';
+    return start;
+}
 
 
 

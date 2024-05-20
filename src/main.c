@@ -7,23 +7,21 @@ int main(){
     char string[4] = "1234";
     // int length;
     // fgets(string,100,stdin);
-
-  //  printf("%p\n",  memset(string,'0',5));
-   printf("%p\n",  s21_memset(string,'0',5));
-   printf("%s\n", string);
+    char src[10] = "1234567890";
+    char dest1[10] = "0000000000";
+   printf("%p\n",  strncpy(dest1,src, 10));
+   printf("%p\n",  s21_strncpy(dest1,src, 10));
+   printf("%s\n", dest1);
     return 0;
 
 }
 
-void *s21_memset(void *str, int c, size_t n){
-if (s21_strlen(str)>=n){
-unsigned char* tmp = (unsigned char*)str;
+char *s21_strncpy(char *dest, const char *src, size_t n){
+    char* start = dest;  
+    while (n != 0 && (*dest++ = *src++)) {
+       n--;
+    }
 
-for (size_t i = 0; i < n; i++) {
-tmp[i] = (unsigned char)c;
-}
-
-return str;
-}else
-return NULL;
+    *dest = '\0';
+    return start;
 }
