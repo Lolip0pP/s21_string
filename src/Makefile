@@ -6,4 +6,4 @@ test:
 	$(CC) s21_string.c tests/*.c $(CHECKFLAGS) $(CFLAGS) -o test
 
 clean:
-	rm -rf **/*.o *.o test
+	rm -rf **/*.o *.o test a.out

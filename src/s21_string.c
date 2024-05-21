@@ -63,20 +63,36 @@ return str;
 return NULL;
 }
 
-// char *s21_strncat(char *dest, const char *src, size_t n){
-
-//    unsigned char len1 = s21_strlen(dest);
-//     unsigned char len2 = s21_strlen(src);
+char *s21_strncat(char *dest, const char *src, size_t n){
+char *dest_start = dest;
     
-//     if (len2 < n) {
-// 	s21_strncpy(&dest[len1], src, len2);
-//     } else {
-// 	s21_strncpy(&dest[len1], src, n);
-// 	dest[len1 + n] = '\0';
-//     }
-//     return dest;
-// }
-
+    // Находим конец dest
+    while (*dest != '\0') {
+        dest++;
+    }
+    
+    // Проверяем наличие места для добавления символов
+    size_t dest_len = dest - dest_start;
+    size_t src_len = 0;
+    const char *src_end = src;
+    while (*src_end != '\0' && (size_t)(src_end - src) < n) {
+    src_end++;
+    src_len++;
+}
+    if (dest_len + src_len >= n) {
+        // Если не хватает места, не выполняем добавление
+        return dest_start;
+    }
+    
+    // Добавляем не более n символов из src в dest
+    while (n > 0 && *src != '\0') {
+        *dest++ = *src++;
+        n--;
+    }
+    
+    *dest = '\0'; // Завершаем строку символом нуля
+    return dest_start;
+}
 char *s21_strncpy(char *dest, const char *src, size_t n){
     char* start = dest;  
 
@@ -85,6 +101,7 @@ char *s21_strncpy(char *dest, const char *src, size_t n){
     }
 
     *dest = '\0';
+
     return start;
 }
 
