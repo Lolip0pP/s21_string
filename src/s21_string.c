@@ -28,7 +28,7 @@ int s21_memcmp(const void *str1, const void *str2, size_t n){
 int flag = 0;
 
 	if (n != 0) {
-		register const unsigned char *p1 = str1, *p2 = str2;
+		const unsigned char *p1 = str1, *p2 = str2;
 		do {
 			if (*p1++ != *p2++){
 				if (*p1 > *p2){
@@ -64,32 +64,27 @@ return str;
 }else
 return NULL;
 }
-
 char *s21_strncat(char *dest, const char *src, size_t n){
-char *dest_start = dest;
+
+   char *save = dest;
+    
+    // Находим конец dest
     while (*dest != '\0') {
         dest++;
     }
-    size_t dest_len = dest - dest_start;
-    size_t src_len = 0;
-    const char *src_end = src;
-    while (*src_end != '\0' && (size_t)(src_end - src) < n) {
-    src_end++;
-    src_len++;
-}
-    if (dest_len + src_len >= n) {
-        return dest_start;
-    }
-    
+
+    // Копируем src до символа '\0' или до n символов
     while (n > 0 && *src != '\0') {
-        *dest++ = *src++;
+        *dest = *src;
+        dest++;
+        src++;
         n--;
     }
-    
-    *dest = '\0'; 
-    return dest_start;
-}
 
+    *dest = '\0';  // Добавляем завершающий нуль
+
+    return save; // Возвращаем указатель на начало строки
+}
 char *s21_strncpy(char *dest, const char *src, size_t n){
     char* start = dest;  
 

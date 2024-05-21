@@ -4,13 +4,13 @@
 #include <stdlib.h>
 
 int main(){
-    char src[10] = "1234567890";
-    char dest1[20] = "0000000000";
-    char dest2[20] = "0000000000";
-    printf("%p\n",  strncat(dest1,src, 15));
+    char src[] = "1234567890";
+    char dest1[] = "1111111111";
+    //char dest2[20] = "0000000000";
+    printf("%p\n",  strncat(dest1,src, 7));
     printf("%s\n", dest1);
-    printf("%p\n",  s21_strncat(dest2,src, 15));
-    printf("%s\n", dest2);
+    // printf("%p\n",  s21_strncat(dest2,src, 3));
+    // printf("%s\n", dest2);
     return 0;
 
 }
