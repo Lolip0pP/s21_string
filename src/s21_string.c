@@ -13,12 +13,14 @@ s21_size_t s21_strlen(const char *str)
 
 void *s21_memchr(const void *str, int c, size_t n)
 {
-	const char *big = (const char *)str;
-	size_t i;
-	for (i = 0; i < n; i++)
-		if (big[i] == c)
-			return (void *)&big[i];
-	return NULL;
+ const char *big = (const char *)str;
+    size_t i = 0;
+    
+    while (i < n && big[i] != c) {
+        i++;
+    }
+
+    return (i < n) ? (void *)&big[i] : NULL;
 }
 
 int s21_memcmp(const void *str1, const void *str2, size_t n){
@@ -65,13 +67,9 @@ return NULL;
 
 char *s21_strncat(char *dest, const char *src, size_t n){
 char *dest_start = dest;
-    
-    // Находим конец dest
     while (*dest != '\0') {
         dest++;
     }
-    
-    // Проверяем наличие места для добавления символов
     size_t dest_len = dest - dest_start;
     size_t src_len = 0;
     const char *src_end = src;
@@ -80,19 +78,18 @@ char *dest_start = dest;
     src_len++;
 }
     if (dest_len + src_len >= n) {
-        // Если не хватает места, не выполняем добавление
         return dest_start;
     }
     
-    // Добавляем не более n символов из src в dest
     while (n > 0 && *src != '\0') {
         *dest++ = *src++;
         n--;
     }
     
-    *dest = '\0'; // Завершаем строку символом нуля
+    *dest = '\0'; 
     return dest_start;
 }
+
 char *s21_strncpy(char *dest, const char *src, size_t n){
     char* start = dest;  
 
@@ -105,6 +102,14 @@ char *s21_strncpy(char *dest, const char *src, size_t n){
     return start;
 }
 
+char *s21_strchr(const char *str, int c){
+
+  while (*str != c && *str != '\0') {
+        str++;
+    }
+    return (*str == c) ? (char *)str : NULL;
+
+}
 
 
 

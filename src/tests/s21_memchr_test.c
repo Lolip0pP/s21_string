@@ -2,9 +2,10 @@
 
 
 START_TEST(test_memchr) {
-    ck_assert_str_eq(s21_memchr("hello",'l', 7), memchr("hello",'l', 7));
-    ck_assert_str_eq(s21_memchr("123",'3', 4), memchr("123",'3', 4));
-    ck_assert_str_eq(s21_memchr("privet k",' ', 9), memchr("privet k",' ', 9));
+    ck_assert_ptr_eq(s21_memchr("hello",'l', 7), memchr("hello",'l', 7));
+    ck_assert_ptr_eq(s21_memchr("123",'3', 4), memchr("123",'3', 4));
+    ck_assert_ptr_eq(s21_memchr("privet k",' ', 9), memchr("privet k",' ', 9));
+    ck_assert_ptr_eq(s21_memchr("privet k",'d', 9), memchr("privet k",'d', 9));
 }
 
 END_TEST

@@ -18,6 +18,7 @@ Suite* s21_memcpy_test(void);
 Suite* s21_memset_test(void);
 Suite* s21_strncpy_test(void);
 Suite* s21_strncat_test(void);
+Suite* s21_strchr_test(void);
 
 
 #endif //CHECK_TEST_EXAMPLE_TEST_H
