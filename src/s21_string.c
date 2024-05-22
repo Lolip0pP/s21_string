@@ -28,7 +28,7 @@ int s21_memcmp(const void *str1, const void *str2, size_t n){
 int flag = 0;
 
 	if (n != 0) {
-		const unsigned char *p1 = str1, *p2 = str2;
+		const char *p1 = str1, *p2 = str2;
 		do {
 			if (*p1++ != *p2++){
 				if (*p1 > *p2){
@@ -54,10 +54,10 @@ void *s21_memcpy(void *dest, const void *src, size_t n){
 
 void *s21_memset(void *str, int c, size_t n){
 if (s21_strlen(str)>=n){
-unsigned char* tmp = (unsigned char*)str;
+char* tmp = (char*)str;
 
 for (size_t i = 0; i < n; i++) {
-tmp[i] = (unsigned char)c;
+tmp[i] = (char)c;
 }
 
 return str;
@@ -67,13 +67,11 @@ return NULL;
 char *s21_strncat(char *dest, const char *src, size_t n){
 
    char *save = dest;
-    
-    // Находим конец dest
+
     while (*dest != '\0') {
         dest++;
     }
 
-    // Копируем src до символа '\0' или до n символов
     while (n > 0 && *src != '\0') {
         *dest = *src;
         dest++;
@@ -81,9 +79,9 @@ char *s21_strncat(char *dest, const char *src, size_t n){
         n--;
     }
 
-    *dest = '\0';  // Добавляем завершающий нуль
+    *dest = '\0'; 
 
-    return save; // Возвращаем указатель на начало строки
+    return save;
 }
 char *s21_strncpy(char *dest, const char *src, size_t n){
     char* start = dest;  
@@ -103,6 +101,25 @@ char *s21_strchr(const char *str, int c){
         str++;
     }
     return (*str == c) ? (char *)str : NULL;
+
+}
+
+int s21_strncmp(const char *str1, const char *str2, size_t n){
+  
+  	int result = 0;
+	char u1 = *str1;
+    char u2 = *str2;
+    while (result == 0 && n > 0) {
+        if (u1 != u2 || u1 == '\0') {
+            result = (int)(u1 - u2);
+        }
+        
+        str1++;
+        str2++;
+		n--;
+    }
+    
+    return result;
 
 }
 
