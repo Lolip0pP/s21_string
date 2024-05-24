@@ -20,6 +20,13 @@ Suite* s21_strncpy_test(void);
 Suite* s21_strncat_test(void);
 Suite* s21_strchr_test(void);
 Suite* s21_strncmp_test(void);
-
+Suite* s21_strcspn_test(void);
+Suite* s21_strpbrk_test(void);
+Suite* s21_strrchr_test(void);
+Suite* s21_strstr_test(void);
+Suite* s21_strtok_test(void);
+Suite* s21_strspn_test(void);
+Suite* s21_NULL_test(void);
+Suite* s21_size_t_test(void);
 
 #endif //CHECK_TEST_EXAMPLE_TEST_H
