@@ -11,8 +11,8 @@ int main(void) {
                     s21_strpbrk_test(), s21_strrchr_test(),
                     s21_strstr_test(),s21_strtok_test(),
                     s21_strspn_test(), s21_NULL_test(),
-                    s21_size_t_test()};
-  for (int i = 0; i < 17; i++) {
+                    s21_size_t_test(), s21_strerror_test()};
+  for (int i = 0; i < 18; i++) {
     SRunner* runner = srunner_create(tests[i]);
     srunner_run_all(runner, CK_NORMAL);
     if (srunner_ntests_failed(runner) != 0){

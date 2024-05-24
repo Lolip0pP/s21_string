@@ -28,5 +28,6 @@ Suite* s21_strtok_test(void);
 Suite* s21_strspn_test(void);
 Suite* s21_NULL_test(void);
 Suite* s21_size_t_test(void);
+Suite* s21_strerror_test(void);
 
 #endif //CHECK_TEST_EXAMPLE_TEST_H
