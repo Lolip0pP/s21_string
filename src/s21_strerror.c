@@ -29,7 +29,7 @@
 	"Permission denied",
 	"Bad address",
 	"Block device required",
-	"Device busy",
+	"Resource busy",
 	"File exists",
 	"Cross-device link",
 	"Operation not supported by device",
@@ -263,7 +263,7 @@ char *s21_strerror(int errnum) {
 
 #ifdef S21_OS_MACOS
     // Поиск сообщения об ошибке в массиве для macOS
-    if (errnum >= 0 && errnum < sizeof(mac_error_messages) / sizeof(mac_error_messages[0])) {
+    if (errnum >= 0 && errnum < (int)sizeof(mac_error_messages) / (int)sizeof(mac_error_messages[0])) {
         error_message = mac_error_messages[errnum];
     }
 #endif
