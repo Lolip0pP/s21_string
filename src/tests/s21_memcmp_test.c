@@ -4,14 +4,14 @@
 START_TEST(test_memcmp_1) {
     char str1[] = "hello";
     char str2[] = "hello";
-    ck_assert_int_eq(s21_memcmp(str1,str2, 2), memcmp(str1,str2, 2));
+    ck_assert_int_eq(s21_memcmp(str1,str2, 6), memcmp(str1,str2, 6));
 }
 END_TEST
 
 START_TEST(test_memcmp_2) {
     char str1[] = "123";
     char str2[] = "23";
-    ck_assert_int_eq(s21_memcmp(str1,str2, 2), memcmp(str1,str2, 2));
+    ck_assert_int_eq(s21_memcmp(str1,str2, 3), memcmp(str1,str2, 3));
 }
 END_TEST
 
@@ -49,7 +49,7 @@ START_TEST(test_memcmp_7) {
     ck_assert_int_eq(s21_memcmp(str1,str2, 2), memcmp(str1,str2, 2));
 }
 END_TEST
-    
+
 START_TEST(test_memcmp_8) {
     char str1[] = "55555";
     char str2[] = "555";
