@@ -1,51 +1,52 @@
-#include "s21_string.h"
 #include <stdio.h>
+
+#include "s21_string.h"
 
 // Макрос для определения операционной системы
 #ifdef __APPLE__
-    #define S21_OS_MACOS
+#define S21_OS_MACOS
 #endif
 
 #ifdef __linux__
-    #define S21_OS_LINUX
+#define S21_OS_LINUX
 #endif
 
 // Макросы с сообщениями об ошибках для macOS
 #ifdef S21_OS_MACOS
-    static const char *mac_error_messages[] = {
+static const char *mac_error_messages[] = {
     "Undefined error: 0",
-	"Operation not permitted",
-	"No such file or directory",
-	"No such process",
-	"Interrupted system call",
-	"Input/output error",
-	"Device not configured",
+    "Operation not permitted",
+    "No such file or directory",
+    "No such process",
+    "Interrupted system call",
+    "Input/output error",
+    "Device not configured",
     "Argument list too long",
-	"Exec format error",
-	"Bad file descriptor",
-	"No child processes",
-	"Resource deadlock avoided",
-	"Cannot allocate memory",
-	"Permission denied",
-	"Bad address",
-	"Block device required",
-	"Resource busy",
-	"File exists",
-	"Cross-device link",
-	"Operation not supported by device",
-	"Not a directory",
-	"Is a directory",
-	"Invalid argument",
-	"Too many open files in system",
-	"Too many open files",
-	"Inappropriate ioctl for device",
-	"Text file busy",
-	"File too large",
-	"No space left on device",
-	"Illegal seek",
-	"Read-only file system",
-	"Too many links",
-	"Broken pipe",
+    "Exec format error",
+    "Bad file descriptor",
+    "No child processes",
+    "Resource deadlock avoided",
+    "Cannot allocate memory",
+    "Permission denied",
+    "Bad address",
+    "Block device required",
+    "Resource busy",
+    "File exists",
+    "Cross-device link",
+    "Operation not supported by device",
+    "Not a directory",
+    "Is a directory",
+    "Invalid argument",
+    "Too many open files in system",
+    "Too many open files",
+    "Inappropriate ioctl for device",
+    "Text file busy",
+    "File too large",
+    "No space left on device",
+    "Illegal seek",
+    "Read-only file system",
+    "Too many links",
+    "Broken pipe",
     "Broken pipe",
     "Numerical argument out of domain",
     "Result too large",
@@ -114,14 +115,13 @@
     "ENOLINK (Reserved)",
     "No STREAM resources",
     "Not a STREAM",
-    "Protocol error"
-    };
+    "Protocol error"};
 #endif
 
 // Макросы с сообщениями об ошибках для Linux
 #ifdef S21_OS_LINUX
-    static const char *linux_error_messages[] = {
- "Success",
+static const char *linux_error_messages[] = {
+    "Success",
     "Operation not permitted",
     "No such file or directory",
     "No such process",
@@ -258,28 +258,30 @@
 #endif
 
 char *s21_strerror(int errnum) {
-    // Инициализируем указатель на строку с сообщением об ошибке
-    const char *error_message = NULL;
+  // Инициализируем указатель на строку с сообщением об ошибке
+  const char *error_message = NULL;
 
 #ifdef S21_OS_MACOS
-    // Поиск сообщения об ошибке в массиве для macOS
-    if (errnum >= 0 && errnum < (int)sizeof(mac_error_messages) / (int)sizeof(mac_error_messages[0])) {
-        error_message = mac_error_messages[errnum];
-    }
+  // Поиск сообщения об ошибке в массиве для macOS
+  if (errnum >= 0 && errnum < (int)sizeof(mac_error_messages) /
+                                  (int)sizeof(mac_error_messages[0])) {
+    error_message = mac_error_messages[errnum];
+  }
 #endif
 
 #ifdef S21_OS_LINUX
-    // Поиск сообщения об ошибке в массиве для Linux
-    if (errnum >= 0 && (s21_size_t)errnum < sizeof(linux_error_messages) / sizeof(linux_error_messages[0])) {
-        error_message = linux_error_messages[errnum];
-    }
+  // Поиск сообщения об ошибке в массиве для Linux
+  if (errnum >= 0 && (s21_size_t)errnum < sizeof(linux_error_messages) /
+                                              sizeof(linux_error_messages[0])) {
+    error_message = linux_error_messages[errnum];
+  }
 #endif
 
-    // Если сообщение об ошибке найдено, возвращаем его
-    if (error_message != NULL) {
-        return (char *)error_message;
-    } else {
-        // Если сообщение об ошибке не найдено, возвращаем "Unknown error"
-        return "Unknown error";
-    }
+  // Если сообщение об ошибке найдено, возвращаем его
+  if (error_message != NULL) {
+    return (char *)error_message;
+  } else {
+    // Если сообщение об ошибке не найдено, возвращаем "Unknown error"
+    return "Unknown error";
+  }
 }

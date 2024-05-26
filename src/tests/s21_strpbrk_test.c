@@ -9,7 +9,6 @@ START_TEST(test_strpbrk) {
     ck_assert_ptr_eq(s21_strpbrk(str2,str3),strpbrk(str2,str3));
     ck_assert_ptr_eq(s21_strpbrk(str3,str4), strpbrk(str3,str4));
 }
-
 END_TEST
 
 

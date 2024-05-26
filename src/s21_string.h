@@ -25,4 +25,4 @@ char *s21_strtok(char *str, const char *delim);
 s21_size_t s21_strspn(const char *str, const char *sym);
 char *s21_strerror(int errnum);
 
-#endif  // CHECK_TEST_EXAMPLE_STRLEN_H
+#endif // CHECK_TEST_EXAMPLE_STRLEN_H
