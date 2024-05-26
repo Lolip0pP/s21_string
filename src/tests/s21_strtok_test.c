@@ -57,8 +57,8 @@ START_TEST(test_strtok_9) {
 END_TEST
 
 START_TEST(test_strtok_10) {
-    char string[] = "///...///";
-    ck_assert_str_eq(s21_strtok(string,"."), strtok(string,"."));
+    char string[] = "0";
+    ck_assert_str_eq(s21_strtok(string," "), strtok(string," "));
 }
 END_TEST
 

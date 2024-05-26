@@ -66,7 +66,7 @@ END_TEST
 
 START_TEST(test_strstr_10) {
     char str1[] = "11 00 1100 11";
-    char str2[] = "11";
+    char str2[] = "\0";
     ck_assert_ptr_eq(s21_strstr(str1,str2), strstr(str1,str2));
 }
 END_TEST
