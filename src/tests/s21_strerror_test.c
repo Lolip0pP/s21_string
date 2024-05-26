@@ -4,7 +4,6 @@
 START_TEST(test_strerror) {
   for (int i = 0;i<133;i++){
   ck_assert_str_eq(s21_strerror(i), strerror(i));
-  //printf("%s || %s\n", s21_strerror(i), strerror(i)); для проверки на маке, потом удалить
   }
 }
 END_TEST
