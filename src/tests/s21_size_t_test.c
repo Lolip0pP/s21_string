@@ -44,8 +44,8 @@ START_TEST(test_size_t_6) {
 END_TEST
 
 START_TEST(test_size_t_7) {
-    s21_size_t size1 = 1.5;
-    size_t size2 = 1.5;
+    s21_size_t size1 = 1;
+    size_t size2 = 1;
     ck_assert_uint_eq(size1, size2);
 }
 END_TEST

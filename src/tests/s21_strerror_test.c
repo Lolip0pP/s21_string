@@ -2,9 +2,17 @@
 #include "test.h"
 
 START_TEST(test_strerror) {
-  for (int i = 0;i<133;i++){
+#ifdef __APPLE__
+  for (int i = 0;i<106;i++){
   ck_assert_str_eq(s21_strerror(i), strerror(i));
   }
+#endif
+
+#ifdef __LINUX__
+  for (int i = 0;i<134;i++){
+  ck_assert_str_eq(s21_strerror(i), strerror(i));
+  }
+#endif
 }
 END_TEST
 

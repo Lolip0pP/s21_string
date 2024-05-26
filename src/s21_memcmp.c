@@ -9,4 +9,6 @@ int s21_memcmp(const void *str1, const void *str2, s21_size_t n) {
         return (n != 0) ? (*--p1 - *--p2) : 0;
     } while (--n != 0);
   }
+
+  return 0;
 }

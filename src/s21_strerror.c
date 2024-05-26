@@ -47,7 +47,6 @@ static const char *mac_error_messages[] = {
     "Read-only file system",
     "Too many links",
     "Broken pipe",
-    "Broken pipe",
     "Numerical argument out of domain",
     "Result too large",
     "Resource temporarily unavailable",
@@ -115,7 +114,13 @@ static const char *mac_error_messages[] = {
     "ENOLINK (Reserved)",
     "No STREAM resources",
     "Not a STREAM",
-    "Protocol error"};
+    "Protocol error",
+    "STREAM ioctl timeout",
+    "Operation not supported on socket",
+    "Policy not found",
+    "State not recoverable",
+    "Previous owner died",
+    "Interface output queue is full"};
 #endif
 
 // Макросы с сообщениями об ошибках для Linux
