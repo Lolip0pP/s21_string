@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-27 12:44:19</td>
+            <td class="headerValue">2024-05-27 20:18:14</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -62,12 +62,13 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>              : #include &quot;s21_string.h&quot;</span>
 <span id="L2"><span class="lineNum">       2</span>              : </span>
-<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">          20 : s21_size_t s21_strlen(const char *str) {</span></span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">          20 :   s21_size_t len = 0;</span></span>
-<span id="L5"><span class="lineNum">       5</span> <span class="tlaGNC">         156 :   for (; str[len]; len++)</span></span>
-<span id="L6"><span class="lineNum">       6</span>              :     ;</span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">          20 :   return len;</span></span>
-<span id="L8"><span class="lineNum">       8</span>              : }</span>
+<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">         106 : s21_size_t s21_strlen(const char *str) {</span></span>
+<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">         106 :   s21_size_t len = 0;</span></span>
+<span id="L5"><span class="lineNum">       5</span>              : </span>
+<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">         826 :   for (; str[len];) len++;</span></span>
+<span id="L7"><span class="lineNum">       7</span>              : </span>
+<span id="L8"><span class="lineNum">       8</span> <span class="tlaGNC">         106 :   return len;</span></span>
+<span id="L9"><span class="lineNum">       9</span>              : }</span>
         </pre>
               </td>
             </tr>

@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
-            <td class="headerCovTableEntry">5</td>
-            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-27 12:44:19</td>
+            <td class="headerValue">2024-05-27 20:18:14</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -326,9 +326,9 @@
 <span id="L264"><span class="lineNum">     264</span>              : </span>
 <span id="L265"><span class="lineNum">     265</span> <span class="tlaGNC tlaBgGNC">         137 : char *s21_strerror(int errnum) {</span></span>
 <span id="L266"><span class="lineNum">     266</span>              :   static char error_message[100] = {&quot;\0&quot;};</span>
-<span id="L267"><span class="lineNum">     267</span> <span class="tlaGNC">         137 :   if (errnum &gt;= 0 &amp;&amp; (s21_size_t)errnum &lt; sizeof(error_list) /</span></span>
-<span id="L268"><span class="lineNum">     268</span>              :                                               sizeof(error_list[0])) {</span>
-<span id="L269"><span class="lineNum">     269</span> <span class="tlaGNC">         136 :     s21_strncpy(error_message, ((char *)error_list[errnum]),100);</span></span>
+<span id="L267"><span class="lineNum">     267</span> <span class="tlaGNC">         137 :   if (errnum &gt;= 0 &amp;&amp;</span></span>
+<span id="L268"><span class="lineNum">     268</span> <span class="tlaGNC">         137 :       (s21_size_t)errnum &lt; sizeof(error_list) / sizeof(error_list[0])) {</span></span>
+<span id="L269"><span class="lineNum">     269</span> <span class="tlaGNC">         136 :     s21_strncpy(error_message, ((char *)error_list[errnum]), 100);</span></span>
 <span id="L270"><span class="lineNum">     270</span>              :   } else {</span>
 <span id="L271"><span class="lineNum">     271</span> <span class="tlaGNC">           1 :     sprintf(error_message, &quot;Unknown error %d&quot;, errnum);</span></span>
 <span id="L272"><span class="lineNum">     272</span>              :   }</span>

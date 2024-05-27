@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
-            <td class="headerCovTableEntry">9</td>
-            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntry">7</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-27 12:44:19</td>
+            <td class="headerValue">2024-05-27 20:18:14</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -62,27 +62,23 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>              : #include &quot;test.h&quot;</span>
 <span id="L2"><span class="lineNum">       2</span>              : </span>
-<span id="L3"><span class="lineNum">       3</span>              : </span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC tlaBgGNC">           1 : START_TEST(test_NULL) {</span></span>
-<span id="L5"><span class="lineNum">       5</span> <span class="tlaGNC">           1 :     ck_assert_ptr_eq(s21_NULL,NULL);</span></span>
-<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">           1 : }</span></span>
-<span id="L7"><span class="lineNum">       7</span>              : </span>
-<span id="L8"><span class="lineNum">       8</span>              : END_TEST</span>
-<span id="L9"><span class="lineNum">       9</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">           1 : START_TEST(test_NULL) { ck_assert_ptr_eq(s21_NULL, NULL); }</span></span>
+<span id="L4"><span class="lineNum">       4</span>              : </span>
+<span id="L5"><span class="lineNum">       5</span>              : END_TEST</span>
+<span id="L6"><span class="lineNum">       6</span>              : </span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">         173 : Suite* s21_NULL_test(void) {</span></span>
+<span id="L8"><span class="lineNum">       8</span>              :   Suite* suite;</span>
+<span id="L9"><span class="lineNum">       9</span>              :   TCase* core;</span>
 <span id="L10"><span class="lineNum">      10</span>              : </span>
-<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">         163 : Suite* s21_NULL_test(void) {</span></span>
-<span id="L12"><span class="lineNum">      12</span>              :     Suite* suite;</span>
-<span id="L13"><span class="lineNum">      13</span>              :     TCase* core;</span>
-<span id="L14"><span class="lineNum">      14</span>              : </span>
-<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">         163 :     suite = suite_create(&quot;s21_NULL&quot;);</span></span>
-<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">         163 :     core = tcase_create(&quot;Core&quot;);</span></span>
+<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">         173 :   suite = suite_create(&quot;s21_NULL&quot;);</span></span>
+<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">         173 :   core = tcase_create(&quot;Core&quot;);</span></span>
+<span id="L13"><span class="lineNum">      13</span>              : </span>
+<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">         173 :   tcase_add_test(core, test_NULL);</span></span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">         173 :   suite_add_tcase(suite, core);</span></span>
 <span id="L17"><span class="lineNum">      17</span>              : </span>
-<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">         163 :     tcase_add_test(core, test_NULL);</span></span>
-<span id="L19"><span class="lineNum">      19</span>              : </span>
-<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">         163 :     suite_add_tcase(suite, core);</span></span>
-<span id="L21"><span class="lineNum">      21</span>              : </span>
-<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">         163 :     return (suite);</span></span>
-<span id="L23"><span class="lineNum">      23</span>              : }</span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">         173 :   return (suite);</span></span>
+<span id="L19"><span class="lineNum">      19</span>              : }</span>
         </pre>
               </td>
             </tr>

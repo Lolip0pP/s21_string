@@ -30,5 +30,5 @@ gcov_report:
 
 clean:
 	rm -rf **/*.o *.o test report.out *.gcno *.gcda *.gcov *.gch
-	rm -f *.o tests/*.o report.info s21_string.a
+	rm -f *.o tests/*.o report.info s21_string.a 
 
