@@ -4,6 +4,14 @@ CHECKFLAGS=-lcheck -lm -lsubunit
 GCOVFLAGS=-fprofile-arcs -ftest-coverage
 LDFLAGS=-lgcov
 
+
+all: s21_string.a gcov_report test
+
+s21_string.a: *.c s21_string.h
+	ar rcs s21_string.a *.c
+	ranlib s21_string.a
+	rm -rf ./*/*.o
+
 test:
 	$(CC) -c *.c
 	$(CC) -c tests/*.c
@@ -22,5 +30,5 @@ gcov_report:
 
 clean:
 	rm -rf **/*.o *.o test report.out *.gcno *.gcda *.gcov *.gch
-	rm -f *.o tests/*.o 
+	rm -f *.o tests/*.o report.info s21_string.a
 

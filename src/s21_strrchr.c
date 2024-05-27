@@ -5,8 +5,7 @@ char *s21_strrchr(const char *str, int c) {
   const char *result = s21_NULL;
 
   for (int i = len; result == s21_NULL && i >= 0; i--) {
-    if (str[i] == c)
-      result = str + i;
+    if (str[i] == c) result = str + i;
   }
 
   return (char *)result;

@@ -9,6 +9,7 @@ export CPATH=/opt/homebrew/include
 export LIBRARY_PATH=/opt/homebrew/lib
 **/
 #include <check.h>
+
 #include "../s21_string.h"
 
 Suite* s21_strlen_test(void);
@@ -30,4 +31,4 @@ Suite* s21_NULL_test(void);
 Suite* s21_size_t_test(void);
 Suite* s21_strerror_test(void);
 
-#endif //CHECK_TEST_EXAMPLE_TEST_H
+#endif  // CHECK_TEST_EXAMPLE_TEST_H

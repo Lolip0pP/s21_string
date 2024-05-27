@@ -264,9 +264,9 @@ static const char *error_list[] = {
 
 char *s21_strerror(int errnum) {
   static char error_message[100] = {"\0"};
-  if (errnum >= 0 && (s21_size_t)errnum < sizeof(error_list) /
-                                              sizeof(error_list[0])) {
-    s21_strncpy(error_message, ((char *)error_list[errnum]),100);
+  if (errnum >= 0 &&
+      (s21_size_t)errnum < sizeof(error_list) / sizeof(error_list[0])) {
+    s21_strncpy(error_message, ((char *)error_list[errnum]), 100);
   } else {
     sprintf(error_message, "Unknown error %d", errnum);
   }
