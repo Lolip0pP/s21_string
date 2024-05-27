@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-26 21:42:20</td>
+            <td class="headerValue">2024-05-27 12:17:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -62,15 +62,15 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>              : #include &quot;s21_string.h&quot;</span>
 <span id="L2"><span class="lineNum">       2</span>              : </span>
-<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">          30 : int s21_strncmp(const char *str1, const char *str2, s21_size_t n) {</span></span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">          30 :   int result = 0;</span></span>
+<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">          10 : int s21_strncmp(const char *str1, const char *str2, s21_size_t n) {</span></span>
+<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">          10 :   int result = 0;</span></span>
 <span id="L5"><span class="lineNum">       5</span>              : </span>
-<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">         174 :   while (n-- &gt; 0 &amp;&amp; (result = *str1 - *str2) == 0 &amp;&amp; *str1 != '\0') {</span></span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">         144 :     str1++;</span></span>
-<span id="L8"><span class="lineNum">       8</span> <span class="tlaGNC">         144 :     str2++;</span></span>
+<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">          58 :   while (n-- &gt; 0 &amp;&amp; (result = *str1 - *str2) == 0 &amp;&amp; *str1 != '\0') {</span></span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">          48 :     str1++;</span></span>
+<span id="L8"><span class="lineNum">       8</span> <span class="tlaGNC">          48 :     str2++;</span></span>
 <span id="L9"><span class="lineNum">       9</span>              :   }</span>
 <span id="L10"><span class="lineNum">      10</span>              : </span>
-<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">          30 :   return result;</span></span>
+<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">          10 :   return result;</span></span>
 <span id="L12"><span class="lineNum">      12</span>              : }</span>
         </pre>
               </td>

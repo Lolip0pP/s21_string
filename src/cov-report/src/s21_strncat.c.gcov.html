@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-26 21:42:20</td>
+            <td class="headerValue">2024-05-27 12:17:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -63,23 +63,23 @@
 <span id="L1"><span class="lineNum">       1</span>              : </span>
 <span id="L2"><span class="lineNum">       2</span>              : #include &quot;s21_string.h&quot;</span>
 <span id="L3"><span class="lineNum">       3</span>              : </span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC tlaBgGNC">          30 : char *s21_strncat(char *dest, const char *src, s21_size_t n) {</span></span>
-<span id="L5"><span class="lineNum">       5</span> <span class="tlaGNC">          30 :   char *save = dest;</span></span>
+<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC tlaBgGNC">          10 : char *s21_strncat(char *dest, const char *src, s21_size_t n) {</span></span>
+<span id="L5"><span class="lineNum">       5</span> <span class="tlaGNC">          10 :   char *save = dest;</span></span>
 <span id="L6"><span class="lineNum">       6</span>              : </span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">         285 :   while (*dest != '\0') {</span></span>
-<span id="L8"><span class="lineNum">       8</span> <span class="tlaGNC">         255 :     dest++;</span></span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">          95 :   while (*dest != '\0') {</span></span>
+<span id="L8"><span class="lineNum">       8</span> <span class="tlaGNC">          85 :     dest++;</span></span>
 <span id="L9"><span class="lineNum">       9</span>              :   }</span>
 <span id="L10"><span class="lineNum">      10</span>              : </span>
-<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">         228 :   while (n &gt; 0 &amp;&amp; *src != '\0') {</span></span>
-<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">         198 :     *dest = *src;</span></span>
-<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">         198 :     dest++;</span></span>
-<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">         198 :     src++;</span></span>
-<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">         198 :     n--;</span></span>
+<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">          76 :   while (n &gt; 0 &amp;&amp; *src != '\0') {</span></span>
+<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">          66 :     *dest = *src;</span></span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">          66 :     dest++;</span></span>
+<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">          66 :     src++;</span></span>
+<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">          66 :     n--;</span></span>
 <span id="L16"><span class="lineNum">      16</span>              :   }</span>
 <span id="L17"><span class="lineNum">      17</span>              : </span>
-<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">          30 :   *dest = '\0';</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">          10 :   *dest = '\0';</span></span>
 <span id="L19"><span class="lineNum">      19</span>              : </span>
-<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">          30 :   return save;</span></span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">          10 :   return save;</span></span>
 <span id="L21"><span class="lineNum">      21</span>              : }</span>
         </pre>
               </td>

@@ -31,18 +31,18 @@
             <td class="headerValue">report.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
-            <td class="headerCovTableEntry">7</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-26 21:42:20</td>
+            <td class="headerValue">2024-05-27 12:17:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
             <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">1</td>
           </tr>
                   <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
                 </table>
@@ -75,7 +75,7 @@
 <span id="L13"><span class="lineNum">      13</span>              : </span>
 <span id="L14"><span class="lineNum">      14</span>              : // Макросы с сообщениями об ошибках для macOS</span>
 <span id="L15"><span class="lineNum">      15</span>              : #ifdef S21_OS_MACOS</span>
-<span id="L16"><span class="lineNum">      16</span>              : static const char *mac_error_messages[] = {</span>
+<span id="L16"><span class="lineNum">      16</span>              : static const char *error_list[] = {</span>
 <span id="L17"><span class="lineNum">      17</span>              :     &quot;Undefined error: 0&quot;,</span>
 <span id="L18"><span class="lineNum">      18</span>              :     &quot;Operation not permitted&quot;,</span>
 <span id="L19"><span class="lineNum">      19</span>              :     &quot;No such file or directory&quot;,</span>
@@ -187,7 +187,7 @@
 <span id="L125"><span class="lineNum">     125</span>              : </span>
 <span id="L126"><span class="lineNum">     126</span>              : // Макросы с сообщениями об ошибках для Linux</span>
 <span id="L127"><span class="lineNum">     127</span>              : #ifdef S21_OS_LINUX</span>
-<span id="L128"><span class="lineNum">     128</span>              : static const char *linux_error_messages[] = {</span>
+<span id="L128"><span class="lineNum">     128</span>              : static const char *error_list[] = {</span>
 <span id="L129"><span class="lineNum">     129</span>              :     &quot;Success&quot;,</span>
 <span id="L130"><span class="lineNum">     130</span>              :     &quot;Operation not permitted&quot;,</span>
 <span id="L131"><span class="lineNum">     131</span>              :     &quot;No such file or directory&quot;,</span>
@@ -324,34 +324,16 @@
 <span id="L262"><span class="lineNum">     262</span>              :     &quot;Memory page has hardware error&quot;};</span>
 <span id="L263"><span class="lineNum">     263</span>              : #endif</span>
 <span id="L264"><span class="lineNum">     264</span>              : </span>
-<span id="L265"><span class="lineNum">     265</span> <span class="tlaUNC tlaBgUNC">           0 : char *s21_strerror(int errnum) {</span></span>
-<span id="L266"><span class="lineNum">     266</span>              :   // Инициализируем указатель на строку с сообщением об ошибке</span>
-<span id="L267"><span class="lineNum">     267</span> <span class="tlaUNC">           0 :   const char *error_message = NULL;</span></span>
-<span id="L268"><span class="lineNum">     268</span>              : </span>
-<span id="L269"><span class="lineNum">     269</span>              : #ifdef S21_OS_MACOS</span>
-<span id="L270"><span class="lineNum">     270</span>              :   // Поиск сообщения об ошибке в массиве для macOS</span>
-<span id="L271"><span class="lineNum">     271</span>              :   if (errnum &gt;= 0 &amp;&amp; errnum &lt; (int)sizeof(mac_error_messages) /</span>
-<span id="L272"><span class="lineNum">     272</span>              :                                   (int)sizeof(mac_error_messages[0])) {</span>
-<span id="L273"><span class="lineNum">     273</span>              :     error_message = mac_error_messages[errnum];</span>
-<span id="L274"><span class="lineNum">     274</span>              :   }</span>
-<span id="L275"><span class="lineNum">     275</span>              : #endif</span>
-<span id="L276"><span class="lineNum">     276</span>              : </span>
-<span id="L277"><span class="lineNum">     277</span>              : #ifdef S21_OS_LINUX</span>
-<span id="L278"><span class="lineNum">     278</span>              :   // Поиск сообщения об ошибке в массиве для Linux</span>
-<span id="L279"><span class="lineNum">     279</span> <span class="tlaUNC">           0 :   if (errnum &gt;= 0 &amp;&amp; (s21_size_t)errnum &lt; sizeof(linux_error_messages) /</span></span>
-<span id="L280"><span class="lineNum">     280</span>              :                                               sizeof(linux_error_messages[0])) {</span>
-<span id="L281"><span class="lineNum">     281</span> <span class="tlaUNC">           0 :     error_message = linux_error_messages[errnum];</span></span>
-<span id="L282"><span class="lineNum">     282</span>              :   }</span>
-<span id="L283"><span class="lineNum">     283</span>              : #endif</span>
-<span id="L284"><span class="lineNum">     284</span>              : </span>
-<span id="L285"><span class="lineNum">     285</span>              :   // Если сообщение об ошибке найдено, возвращаем его</span>
-<span id="L286"><span class="lineNum">     286</span> <span class="tlaUNC">           0 :   if (error_message != NULL) {</span></span>
-<span id="L287"><span class="lineNum">     287</span> <span class="tlaUNC">           0 :     return (char *)error_message;</span></span>
-<span id="L288"><span class="lineNum">     288</span>              :   } else {</span>
-<span id="L289"><span class="lineNum">     289</span>              :     // Если сообщение об ошибке не найдено, возвращаем &quot;Unknown error&quot;</span>
-<span id="L290"><span class="lineNum">     290</span> <span class="tlaUNC">           0 :     return &quot;Unknown error&quot;;</span></span>
-<span id="L291"><span class="lineNum">     291</span>              :   }</span>
-<span id="L292"><span class="lineNum">     292</span>              : }</span>
+<span id="L265"><span class="lineNum">     265</span> <span class="tlaGNC tlaBgGNC">         137 : char *s21_strerror(int errnum) {</span></span>
+<span id="L266"><span class="lineNum">     266</span>              :   static char error_message[100] = {&quot;\0&quot;};</span>
+<span id="L267"><span class="lineNum">     267</span> <span class="tlaGNC">         137 :   if (errnum &gt;= 0 &amp;&amp; (s21_size_t)errnum &lt; sizeof(error_list) /</span></span>
+<span id="L268"><span class="lineNum">     268</span>              :                                               sizeof(error_list[0])) {</span>
+<span id="L269"><span class="lineNum">     269</span> <span class="tlaGNC">         136 :     s21_strncpy(error_message, ((char *)error_list[errnum]),100);</span></span>
+<span id="L270"><span class="lineNum">     270</span>              :   } else {</span>
+<span id="L271"><span class="lineNum">     271</span> <span class="tlaGNC">           1 :     sprintf(error_message, &quot;Unknown error %d&quot;, errnum);</span></span>
+<span id="L272"><span class="lineNum">     272</span>              :   }</span>
+<span id="L273"><span class="lineNum">     273</span> <span class="tlaGNC">         137 :   return error_message;</span></span>
+<span id="L274"><span class="lineNum">     274</span>              : }</span>
         </pre>
               </td>
             </tr>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-26 21:42:20</td>
+            <td class="headerValue">2024-05-27 12:17:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -62,33 +62,33 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>              : #include &quot;s21_string.h&quot;</span>
 <span id="L2"><span class="lineNum">       2</span>              : </span>
-<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">          30 : char *s21_strstr(const char *haystack, const char *needle) {</span></span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">          30 :   char *result = s21_NULL;</span></span>
+<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">          10 : char *s21_strstr(const char *haystack, const char *needle) {</span></span>
+<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">          10 :   char *result = s21_NULL;</span></span>
 <span id="L5"><span class="lineNum">       5</span>              : </span>
-<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">          30 :   if (*needle == '\0') {</span></span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">           3 :     result = (char *)haystack;</span></span>
+<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">          10 :   if (*needle == '\0') {</span></span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">           1 :     result = (char *)haystack;</span></span>
 <span id="L8"><span class="lineNum">       8</span>              : </span>
 <span id="L9"><span class="lineNum">       9</span>              :   } else {</span>
-<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">         144 :     while (*haystack != '\0' &amp;&amp; result == s21_NULL) {</span></span>
-<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">         117 :       const char *h = haystack;</span></span>
+<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">          48 :     while (*haystack != '\0' &amp;&amp; result == s21_NULL) {</span></span>
+<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">          39 :       const char *h = haystack;</span></span>
 <span id="L12"><span class="lineNum">      12</span>              : </span>
-<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">         117 :       const char *n = needle;</span></span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">          39 :       const char *n = needle;</span></span>
 <span id="L14"><span class="lineNum">      14</span>              : </span>
-<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">         180 :       while (*h != '\0' &amp;&amp; *n != '\0' &amp;&amp; *h == *n) {</span></span>
-<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">          63 :         h++;</span></span>
+<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">          60 :       while (*h != '\0' &amp;&amp; *n != '\0' &amp;&amp; *h == *n) {</span></span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">          21 :         h++;</span></span>
 <span id="L17"><span class="lineNum">      17</span>              : </span>
-<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">          63 :         n++;</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">          21 :         n++;</span></span>
 <span id="L19"><span class="lineNum">      19</span>              :       }</span>
 <span id="L20"><span class="lineNum">      20</span>              : </span>
-<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">         117 :       if (*n == '\0') {</span></span>
-<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">          21 :         result = (char *)haystack;</span></span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">          39 :       if (*n == '\0') {</span></span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">           7 :         result = (char *)haystack;</span></span>
 <span id="L23"><span class="lineNum">      23</span>              :       }</span>
 <span id="L24"><span class="lineNum">      24</span>              : </span>
-<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">         117 :       haystack++;</span></span>
+<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">          39 :       haystack++;</span></span>
 <span id="L26"><span class="lineNum">      26</span>              :     }</span>
 <span id="L27"><span class="lineNum">      27</span>              :   }</span>
 <span id="L28"><span class="lineNum">      28</span>              : </span>
-<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">          30 :   return result;</span></span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">          10 :   return result;</span></span>
 <span id="L30"><span class="lineNum">      30</span>              : }</span>
         </pre>
               </td>

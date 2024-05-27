@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
-            <td class="headerCovTableEntry">8</td>
-            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">13</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-26 21:42:20</td>
+            <td class="headerValue">2024-05-27 12:17:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -62,35 +62,47 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>              : </span>
 <span id="L2"><span class="lineNum">       2</span>              : #include &quot;test.h&quot;</span>
-<span id="L3"><span class="lineNum">       3</span>              : </span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC tlaBgGNC">           3 : START_TEST(test_strerror) {</span></span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;stdio.h&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : </span>
 <span id="L5"><span class="lineNum">       5</span>              : #ifdef __APPLE__</span>
-<span id="L6"><span class="lineNum">       6</span>              :   for (int i = 0;i&lt;106;i++){</span>
-<span id="L7"><span class="lineNum">       7</span>              :   ck_assert_str_eq(s21_strerror(i), strerror(i));</span>
-<span id="L8"><span class="lineNum">       8</span>              :   }</span>
-<span id="L9"><span class="lineNum">       9</span>              : #endif</span>
-<span id="L10"><span class="lineNum">      10</span>              : </span>
-<span id="L11"><span class="lineNum">      11</span>              : #ifdef __LINUX__</span>
-<span id="L12"><span class="lineNum">      12</span>              :   for (int i = 0;i&lt;134;i++){</span>
-<span id="L13"><span class="lineNum">      13</span>              :   ck_assert_str_eq(s21_strerror(i), strerror(i));</span>
-<span id="L14"><span class="lineNum">      14</span>              :   }</span>
-<span id="L15"><span class="lineNum">      15</span>              : #endif</span>
-<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">           3 : }</span></span>
-<span id="L17"><span class="lineNum">      17</span>              : END_TEST</span>
-<span id="L18"><span class="lineNum">      18</span>              : </span>
-<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">         487 : Suite* s21_strerror_test(void) {</span></span>
-<span id="L20"><span class="lineNum">      20</span>              :     Suite* suite;</span>
-<span id="L21"><span class="lineNum">      21</span>              :     TCase* core;</span>
-<span id="L22"><span class="lineNum">      22</span>              : </span>
-<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">         487 :     suite = suite_create(&quot;s21_strerror&quot;);</span></span>
-<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">         487 :     core = tcase_create(&quot;Core&quot;);</span></span>
-<span id="L25"><span class="lineNum">      25</span>              : </span>
-<span id="L26"><span class="lineNum">      26</span> <span class="tlaGNC">         487 :     tcase_add_test(core, test_strerror);</span></span>
-<span id="L27"><span class="lineNum">      27</span>              : </span>
-<span id="L28"><span class="lineNum">      28</span> <span class="tlaGNC">         487 :     suite_add_tcase(suite, core);</span></span>
-<span id="L29"><span class="lineNum">      29</span>              : </span>
-<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">         487 :     return (suite);</span></span>
-<span id="L31"><span class="lineNum">      31</span>              : }</span>
+<span id="L6"><span class="lineNum">       6</span>              : #define S21_OS_MACOS</span>
+<span id="L7"><span class="lineNum">       7</span>              : #endif</span>
+<span id="L8"><span class="lineNum">       8</span>              : </span>
+<span id="L9"><span class="lineNum">       9</span>              : #ifdef __linux__</span>
+<span id="L10"><span class="lineNum">      10</span>              : #define S21_OS_LINUX</span>
+<span id="L11"><span class="lineNum">      11</span>              : #endif</span>
+<span id="L12"><span class="lineNum">      12</span>              : </span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC tlaBgGNC">           1 : START_TEST(test_strerror) {</span></span>
+<span id="L14"><span class="lineNum">      14</span>              : #ifdef S21_OS_MACOS</span>
+<span id="L15"><span class="lineNum">      15</span>              :   for (int i = 0;i&lt;106;i++){</span>
+<span id="L16"><span class="lineNum">      16</span>              :   ck_assert_str_eq(s21_strerror(i), strerror(i));</span>
+<span id="L17"><span class="lineNum">      17</span>              :   }</span>
+<span id="L18"><span class="lineNum">      18</span>              : #endif</span>
+<span id="L19"><span class="lineNum">      19</span>              : </span>
+<span id="L20"><span class="lineNum">      20</span>              : #ifdef S21_OS_LINUX</span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">         135 :   for (int i = 0;i&lt;134;i++){</span></span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">         134 :   ck_assert_str_eq(s21_strerror(i), strerror(i));</span></span>
+<span id="L23"><span class="lineNum">      23</span>              :   }</span>
+<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">           1 :   ck_assert_str_eq(s21_strerror(5), strerror(5));</span></span>
+<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">           1 :   ck_assert_str_eq(s21_strerror(155), strerror(155));</span></span>
+<span id="L26"><span class="lineNum">      26</span> <span class="tlaGNC">           1 :   ck_assert_str_eq(s21_strerror(0), strerror(0));</span></span>
+<span id="L27"><span class="lineNum">      27</span>              : #endif</span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaGNC">           1 : }</span></span>
+<span id="L29"><span class="lineNum">      29</span>              : END_TEST</span>
+<span id="L30"><span class="lineNum">      30</span>              : </span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaGNC">         163 : Suite* s21_strerror_test(void) {</span></span>
+<span id="L32"><span class="lineNum">      32</span>              :     Suite* suite;</span>
+<span id="L33"><span class="lineNum">      33</span>              :     TCase* core;</span>
+<span id="L34"><span class="lineNum">      34</span>              : </span>
+<span id="L35"><span class="lineNum">      35</span> <span class="tlaGNC">         163 :     suite = suite_create(&quot;s21_strerror&quot;);</span></span>
+<span id="L36"><span class="lineNum">      36</span> <span class="tlaGNC">         163 :     core = tcase_create(&quot;Core&quot;);</span></span>
+<span id="L37"><span class="lineNum">      37</span>              : </span>
+<span id="L38"><span class="lineNum">      38</span> <span class="tlaGNC">         163 :     tcase_add_test(core, test_strerror);</span></span>
+<span id="L39"><span class="lineNum">      39</span>              : </span>
+<span id="L40"><span class="lineNum">      40</span> <span class="tlaGNC">         163 :     suite_add_tcase(suite, core);</span></span>
+<span id="L41"><span class="lineNum">      41</span>              : </span>
+<span id="L42"><span class="lineNum">      42</span> <span class="tlaGNC">         163 :     return (suite);</span></span>
+<span id="L43"><span class="lineNum">      43</span>              : }</span>
         </pre>
               </td>
             </tr>

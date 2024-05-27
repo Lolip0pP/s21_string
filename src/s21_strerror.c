@@ -13,7 +13,7 @@
 
 // Макросы с сообщениями об ошибках для macOS
 #ifdef S21_OS_MACOS
-static const char *mac_error_messages[] = {
+static const char *error_list[] = {
     "Undefined error: 0",
     "Operation not permitted",
     "No such file or directory",
@@ -125,7 +125,7 @@ static const char *mac_error_messages[] = {
 
 // Макросы с сообщениями об ошибках для Linux
 #ifdef S21_OS_LINUX
-static const char *linux_error_messages[] = {
+static const char *error_list[] = {
     "Success",
     "Operation not permitted",
     "No such file or directory",
@@ -263,30 +263,12 @@ static const char *linux_error_messages[] = {
 #endif
 
 char *s21_strerror(int errnum) {
-  // Инициализируем указатель на строку с сообщением об ошибке
-  const char *error_message = NULL;
-
-#ifdef S21_OS_MACOS
-  // Поиск сообщения об ошибке в массиве для macOS
-  if (errnum >= 0 && errnum < (int)sizeof(mac_error_messages) /
-                                  (int)sizeof(mac_error_messages[0])) {
-    error_message = mac_error_messages[errnum];
-  }
-#endif
-
-#ifdef S21_OS_LINUX
-  // Поиск сообщения об ошибке в массиве для Linux
-  if (errnum >= 0 && (s21_size_t)errnum < sizeof(linux_error_messages) /
-                                              sizeof(linux_error_messages[0])) {
-    error_message = linux_error_messages[errnum];
-  }
-#endif
-
-  // Если сообщение об ошибке найдено, возвращаем его
-  if (error_message != NULL) {
-    return (char *)error_message;
+  static char error_message[100] = {"\0"};
+  if (errnum >= 0 && (s21_size_t)errnum < sizeof(error_list) /
+                                              sizeof(error_list[0])) {
+    s21_strncpy(error_message, ((char *)error_list[errnum]),100);
   } else {
-    // Если сообщение об ошибке не найдено, возвращаем "Unknown error"
-    return "Unknown error";
+    sprintf(error_message, "Unknown error %d", errnum);
   }
+  return error_message;
 }

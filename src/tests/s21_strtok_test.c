@@ -3,62 +3,72 @@
 
 
 START_TEST(test_strtok_1) {
-    char string[ ] = "1.2.3.4.5";
-    ck_assert_str_eq(s21_strtok(string,"."), strtok(string,"."));
+    char string1[ ] = "1.2.3.4.5";
+    char string2[] = ".";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_2) {
-    char string[] = "he/ll/o";
-    ck_assert_str_eq(s21_strtok(string,"/"), strtok(string,"/"));
+    char string1[] = "he/ll/o";
+    char string2[] = "/";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_3) {
-    char string[] = "1//213//14";
-    ck_assert_str_eq(s21_strtok(string,"//"), strtok(string,"//"));
+    char string1[] = "1//213//14";
+    char string2[] = "//";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_4) {
-    char string[] = "1//213//14";
-    ck_assert_str_eq(s21_strtok(string," "), strtok(string," "));
+    char string1[] = "1//213//14";
+    char string2[] = " ";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_5) {
-    char string[] = "1+1=2";
-    ck_assert_str_eq(s21_strtok(string,"="), strtok(string,"="));
+    char string1[] = "1+1=2";
+    char string2[] = "=";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_6) {
-    char string[] = "1+1=2";
-    ck_assert_str_eq(s21_strtok(string,"+1"), strtok(string,"+1"));
+    char string1[] = "1+1=2";
+    char string2[] = "+1";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_7) {
-    char string[] = "123145167189";
-    ck_assert_str_eq(s21_strtok(string,"1"), strtok(string,"1"));
+    char string1[] = "123145167189";
+    char string2[] = "1";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_8) {
-    char string[] = "123145167189";
-    ck_assert_str_eq(s21_strtok(string,"12"), strtok(string,"12"));
+    char string1[] = "123145167189";
+    char string2[] = "12";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_9) {
-    char string[] = "123145167189";
-    ck_assert_str_eq(s21_strtok(string,"9"), strtok(string,"9"));
+    char string1[] = "123145167189";
+    char string2[] = "";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
 START_TEST(test_strtok_10) {
-    char string[] = "0";
-    ck_assert_str_eq(s21_strtok(string," "), strtok(string," "));
+    char string1[] = "\0";
+    char string2[] = "11";
+    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 

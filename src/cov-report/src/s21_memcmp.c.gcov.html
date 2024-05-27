@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-26 21:42:20</td>
+            <td class="headerValue">2024-05-27 12:17:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -62,19 +62,19 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>              : #include &quot;s21_string.h&quot;</span>
 <span id="L2"><span class="lineNum">       2</span>              : </span>
-<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">          30 : int s21_memcmp(const void *str1, const void *str2, s21_size_t n) {</span></span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">          30 :   int count = 0;</span></span>
+<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">          10 : int s21_memcmp(const void *str1, const void *str2, s21_size_t n) {</span></span>
+<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">          10 :   int count = 0;</span></span>
 <span id="L5"><span class="lineNum">       5</span>              : </span>
-<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">          30 :   if (n != 0) {</span></span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">          30 :     const char *p1 = str1, *p2 = str2;</span></span>
+<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">          10 :   if (n != 0) {</span></span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">          10 :     const char *p1 = str1, *p2 = str2;</span></span>
 <span id="L8"><span class="lineNum">       8</span>              : </span>
 <span id="L9"><span class="lineNum">       9</span>              :     do {</span>
-<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">          63 :       if (*p1++ != *p2++)</span></span>
-<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">          27 :         count = (n != 0) ? (*--p1 - *--p2) : 0;</span></span>
-<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">          63 :     } while (--n != 0 &amp;&amp; !count);</span></span>
+<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">          21 :       if (*p1++ != *p2++)</span></span>
+<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">           9 :         count = (n != 0) ? (*--p1 - *--p2) : 0;</span></span>
+<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">          21 :     } while (--n != 0 &amp;&amp; !count);</span></span>
 <span id="L13"><span class="lineNum">      13</span>              :   }</span>
 <span id="L14"><span class="lineNum">      14</span>              : </span>
-<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">          30 :   return count;</span></span>
+<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">          10 :   return count;</span></span>
 <span id="L16"><span class="lineNum">      16</span>              : }</span>
         </pre>
               </td>

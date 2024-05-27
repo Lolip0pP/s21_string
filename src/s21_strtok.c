@@ -20,7 +20,8 @@ char *s21_strtok(char *str, const char *delim) {
       } else {
         next_token = s21_NULL;
       }
-    } else {
+    }
+     else {
       token = s21_NULL;
       next_token = s21_NULL;
     }
