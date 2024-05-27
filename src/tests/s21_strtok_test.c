@@ -68,7 +68,7 @@ END_TEST
 START_TEST(test_strtok_10) {
     char string1[] = "\0";
     char string2[] = "11";
-    ck_assert_str_eq(s21_strtok(string1,string2), strtok(string1,string2));
+    ck_assert_ptr_eq(s21_strtok(string1,string2), strtok(string1,string2));
 }
 END_TEST
 
