@@ -16,4 +16,3 @@ char *s21_strchr(const char *str, int c) {
   }
   return (*str == c) ? (char *)str : s21_NULL;
 }
->>>>>>> bandwidl
