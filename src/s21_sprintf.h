@@ -11,5 +11,6 @@ typedef struct {
 int s21_sprintf(char *str, const char *format, ...);
 int_to_string(int num, char* buffer);
 double_to_string(double num, char* buffer);
+int base_accuracy(int accuracy, int symbol);
 
 #endif //S21_SPRINTF_H
