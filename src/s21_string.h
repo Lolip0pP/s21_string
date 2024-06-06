@@ -16,6 +16,7 @@
 typedef long unsigned s21_size_t;
 
 s21_size_t s21_strlen(const char *str);
+char *s21_strcat(char *dest, const char *str);
 void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
@@ -33,6 +34,7 @@ s21_size_t s21_strspn(const char *str, const char *sym);
 char *s21_strerror(int errnum);
 void *s21_to_upper(const char *str);
 void *s21_to_lower(const char *str);
+int s21_strncasecmp(const char *s1, const char *s2, s21_size_t n);
 
 
 #include "s21_sprintf.h"
