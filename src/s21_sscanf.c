@@ -82,3 +82,15 @@ long double str_to_float(const char *format, struct pos_format *pos_format, stru
 
   return sign * result;
 }
+
+int is_digital(char ch, int base) {
+  int res = 1;
+  if (base == 8)
+    res = ch >= '0' && ch <= '8';
+  else if (base == 10)
+    res = (ch >= '0' && ch <= '9');
+  else if (base == 16)
+    res = (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') ||
+          (ch >= 'A' && ch <= 'F');
+  return res;
+}
