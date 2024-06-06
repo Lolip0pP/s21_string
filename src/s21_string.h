@@ -12,6 +12,8 @@
 #include <string.h>
 
 #define s21_NULL ((void *)0)
+#define S21_INF (1.0 / 0.0)
+#define S21_NINF (-1.0 / 0.0)
 
 typedef long unsigned s21_size_t;
 
