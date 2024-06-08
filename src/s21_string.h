@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <wchar.h>
-#include <string.h>
 
 #define s21_NULL ((void *)0)
 #define S21_INF (1.0 / 0.0)
@@ -37,8 +36,5 @@ char *s21_strerror(int errnum);
 void *s21_to_upper(const char *str);
 void *s21_to_lower(const char *str);
 int s21_strncasecmp(const char *s1, const char *s2, s21_size_t n);
-
-
-#include "s21_sprintf.h"
 
 #endif  // S21_STRING_H
