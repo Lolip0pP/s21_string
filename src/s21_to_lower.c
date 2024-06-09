@@ -1,9 +1,13 @@
 #include "s21_string.h"
 
 void *s21_to_lower(const char *str) {
-  char *new_string = malloc(s21_strlen(str) + 1);
+  s21_size_t len = s21_strlen(str);
+  char *new_string = malloc(len + 1);
+  if (new_string == NULL) {
+      return NULL; // обработка ошибки выделения памяти
+  }
   
-  for (s21_size_t i = 0; i < s21_strlen(str); i++) {
+  for (s21_size_t i = 0; i < len; i++) {
     if (str[i] >= 'A' && str[i] <= 'Z') {
       new_string[i] = str[i] + 32;
     } else {
@@ -11,7 +15,7 @@ void *s21_to_lower(const char *str) {
     }
   }
 
-  new_string[s21_strlen(str)] = '\0';
+  new_string[len] = '\0';
 
   return new_string;
 }
