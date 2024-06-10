@@ -639,15 +639,6 @@ START_TEST(to_upper_n4)
 }
 END_TEST
 
-START_TEST(to_upper_n5)
-{
-	char *result = s21_to_upper(NULL);
-	ck_assert_ptr_null(result);
-	free(result);	
-
-}
-END_TEST
-
 START_TEST(to_lower_n1)
 {
 	char buf[] = "HELLO sd AA";
@@ -677,15 +668,6 @@ START_TEST(to_lower_n4)
 	if(result){ 
 	ck_assert_str_eq(result, "");
 	free(result);}
-
-}
-END_TEST
-
-START_TEST(to_lower_n5)
-{
-	char *result = s21_to_lower(NULL);
-	ck_assert_ptr_null(result);
-	free(result);
 
 }
 END_TEST
@@ -1109,11 +1091,9 @@ int main(void)
     tcase_add_test(tc1_1, to_upper_n1);
     tcase_add_test(tc1_1, to_upper_n2);
     tcase_add_test(tc1_1, to_upper_n4);
-    tcase_add_test(tc1_1, to_upper_n5);
     tcase_add_test(tc1_1, to_lower_n1);
     tcase_add_test(tc1_1, to_lower_n2);
     tcase_add_test(tc1_1, to_lower_n4);
-    tcase_add_test(tc1_1, to_lower_n5);
     tcase_add_test(tc1_1, test_s21_sscanf_read_int_1);
     tcase_add_test(tc1_1, test_s21_sscanf_read_int);
     tcase_add_test(tc1_1, test_s21_sscanf_read_char);

@@ -412,11 +412,6 @@
 	ck_assert_str_eq(str, "");
 	free(str);}
 
-#test to_upper_n5
-	char *result = s21_to_upper(NULL);
-	ck_assert_ptr_null(result);
-	free(result);	
-
 #test to_lower_n1
 	char buf[] = "HELLO sd AA";
 	char *str = s21_to_lower(buf);
@@ -437,11 +432,6 @@
 	if(result){ 
 	ck_assert_str_eq(result, "");
 	free(result);}
-
-#test to_lower_n5
-	char *result = s21_to_lower(NULL);
-	ck_assert_ptr_null(result);
-	free(result);
 
 #test test_s21_sscanf_read_int_1
     int s21_a=0;

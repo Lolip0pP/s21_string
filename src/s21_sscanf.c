@@ -1,5 +1,4 @@
 #include "s21_string.h"
-#include <string.h>
 
 #define DEFAULT_WIDTH 50
 
