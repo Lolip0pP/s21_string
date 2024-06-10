@@ -37,5 +37,6 @@ char *s21_strerror(int errnum);
 void *s21_to_upper(const char *str);
 void *s21_to_lower(const char *str);
 int s21_strncasecmp(const char *s1, const char *s2, s21_size_t n);
+int s21_sscanf(const char *str, const char *format, ...);
 
 #endif  // S21_STRING_H

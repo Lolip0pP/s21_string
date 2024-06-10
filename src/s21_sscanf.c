@@ -72,17 +72,6 @@ int s21_sscanf(const char *str, const char *format, ...) {
   return pf.count;
 }
 
-int main() {
-  double i;
-  char *form = "%lf ";
-  char *var = "123.";
-  s21_sscanf(var, form, &i);
-  printf(form, i);
-  sscanf(var, form, &i);
-  printf(form, i);
-  return 0;
-};
-
 int is_digital(char ch, int base) {
   if (base == 8)
     return ch >= '0' && ch <= '7';
@@ -186,14 +175,14 @@ void find_and_set_value(type_label_t type, const char *str, pos_format_t *pf, va
     case 'g':
     case 'G':
       if (type.size == 'l') {
-        double *pf = va_arg(parm, double *);
-        make_fGgEe(pf, str, pf, type);
+        double *pl = va_arg(parm, double *);
+        make_fGgEe(pl, str, pf, type);
       } else if (type.size == 'L') {
-        long double *pf = va_arg(parm, long double *);
-        make_fGgEe(pf, str, pf, type);
+        long double *pl = va_arg(parm, long double *);
+        make_fGgEe(pl, str, pf, type);
       } else {
-        float *pf = va_arg(parm, float *);
-        make_fGgEe(pf, str, pf, type);
+        float *pl = va_arg(parm, float *);
+        make_fGgEe(pl, str, pf, type);
       }
       break;
     case 'c':
@@ -241,7 +230,17 @@ void make_di(void *i, const char *str, pos_format_t *pf, type_label_t t) {
 }
 
 void make_fGgEe(void *label, const char *str, pos_format_t *pf, type_label_t t) {
-  *(long double *)label = str_to_float(str, pf, t);
+    long double value = str_to_float(str, pf, t);
+    if (!t.ignor) {
+        if (t.size == 0)
+            *((float *)label) = (float)value;
+        else if (t.size == 'l')
+            *((double *)label) = (double)value;
+        else if (t.size == 'L')
+            *((long double *)label) = (long double)value;
+        else
+            pf->error = 5;  // error size type
+    }
 }
 
 void make_s(void *label, const char *str, pos_format_t *pf, type_label_t t) {
