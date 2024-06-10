@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <wchar.h>
+#include <stddef.h>
 
 #define s21_NULL ((void *)0)
 #define S21_INF (1.0 / 0.0)
@@ -27,11 +28,11 @@ char *s21_strncpy(char *dest, const char *src, s21_size_t n);
 char *s21_strchr(const char *str, int c);
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
 s21_size_t s21_strcspn(const char *str, const char *sym);
+s21_size_t s21_strspn(const char *str, const char *sym);
 char *s21_strpbrk(const char *str1, const char *str2);
 char *s21_strrchr(const char *str, int c);
 char *s21_strstr(const char *haystack, const char *needle);
 char *s21_strtok(char *str, const char *delim);
-s21_size_t s21_strspn(const char *str, const char *sym);
 char *s21_strerror(int errnum);
 void *s21_to_upper(const char *str);
 void *s21_to_lower(const char *str);
