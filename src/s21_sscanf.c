@@ -276,6 +276,76 @@ void make_n(void *label, pos_format_t *pf, type_label_t type) {
   }
 }
 
+long double str_to_float(const char *format, pos_format_t *pf, type_label_t type) {
+  int sign = 1;
+  long double result = 0.0;
+  int exp_sign = 1;
+  int exponent = 0;
+  int decimal_part = 0;
+  int decimal_digits = 0;
+  s21_size_t start = pf->pos_str;
+  s21_size_t *position = &pf->pos_str;
+  int width = type.width == 0 ? DEFAULT_WIDTH : type.width;
+
+  if (format[*position] == '-') {
+    sign = -1;
+    (*position)++;
+    width--;
+  } else if (format[*position] == '+') {
+    (*position)++;
+    width--;
+  }
+
+  if (width >= 3) {
+    if (s21_strncasecmp(format + *position, "nan", 3) == 0) {
+      *position += 3;
+      return sign * NAN;
+    } else if (s21_strncasecmp(format + *position, "inf", 3) == 0) {
+      *position += 3;
+      return sign * INFINITY;
+    }
+  }
+
+    while (is_digital(format[*position], 10) && width > 0) {
+      result = result * 10.0 + (format[*position] - '0');
+      (*position)++;
+      width--;
+    }
+
+    if (format[*position] == '.' && width > 0) {
+      (*position)++;
+      width--;
+      while (is_digital(format[*position], 10) && width > 0) {
+        decimal_part = decimal_part * 10 + (format[*position] - '0');
+        decimal_digits++;
+        (*position)++;
+        width--;
+      }
+      result += (long double)decimal_part / powl(10, decimal_digits);
+    }
+
+    if ((format[*position] == 'E' || format[*position] == 'e') && width > 0) {
+      (*position)++;
+      width--;
+      if (format[*position] == '-' && width > 0) {
+        exp_sign = -1;
+        (*position)++;
+        width--;
+      } else if (format[*position] == '+' && width > 0) {
+        (*position)++;
+        width--;
+      }
+      while (is_digital(format[*position], 10) && width > 0) {
+        exponent = exponent * 10 + (format[*position] - '0');
+        (*position)++;
+        width--;
+      }
+      result *= powl(10, exp_sign * exponent);
+    }
+
+    return sign * result;
+}
+
 long long int str_to_int(const char *str, s21_size_t *position, int base, int width, int *error) {
     long long int value = 0;
     int sign_multiplier = 1;
@@ -363,76 +433,6 @@ int char_to_number(char ch) {
   else if (ch >= 'a' && ch <= 'f') number = ch - 'a' + 10;
   else if (ch >= 'A' && ch <= 'F') number = ch - 'A' + 10;
   return number;
-}
-
-long double str_to_float(const char *format, pos_format_t *pf, type_label_t type) {
-  int sign = 1;
-  long double result = 0.0;
-  int exp_sign = 1;
-  int exponent = 0;
-  int decimal_part = 0;
-  int decimal_digits = 0;
-  s21_size_t start = pf->pos_str;
-  s21_size_t *position = &pf->pos_str;
-  int width = type.width == 0 ? DEFAULT_WIDTH : type.width;
-
-  if (format[*position] == '-') {
-    sign = -1;
-    (*position)++;
-    width--;
-  } else if (format[*position] == '+') {
-    (*position)++;
-    width--;
-  }
-
-  if (width >= 3) {
-    if (s21_strncasecmp(format + *position, "nan", 3) == 0) {
-      *position += 3;
-      return sign * NAN;
-    } else if (s21_strncasecmp(format + *position, "inf", 3) == 0) {
-      *position += 3;
-      return sign * INFINITY;
-    }
-  }
-
-    while (is_digital(format[*position], 10) && width > 0) {
-      result = result * 10.0 + (format[*position] - '0');
-      (*position)++;
-      width--;
-    }
-
-    if (format[*position] == '.' && width > 0) {
-      (*position)++;
-      width--;
-      while (is_digital(format[*position], 10) && width > 0) {
-        decimal_part = decimal_part * 10 + (format[*position] - '0');
-        decimal_digits++;
-        (*position)++;
-        width--;
-      }
-      result += (long double)decimal_part / powl(10, decimal_digits);
-    }
-
-    if ((format[*position] == 'E' || format[*position] == 'e') && width > 0) {
-      (*position)++;
-      width--;
-      if (format[*position] == '-' && width > 0) {
-        exp_sign = -1;
-        (*position)++;
-        width--;
-      } else if (format[*position] == '+' && width > 0) {
-        (*position)++;
-        width--;
-      }
-      while (is_digital(format[*position], 10) && width > 0) {
-        exponent = exponent * 10 + (format[*position] - '0');
-        (*position)++;
-        width--;
-      }
-      result *= powl(10, exp_sign * exponent);
-    }
-
-    return sign * result;
 }
 
 int get_size_type(const char *format, s21_size_t *position) {
