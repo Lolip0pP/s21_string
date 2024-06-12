@@ -1,0 +1,594 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - report.info - src/s21_sscanf.c</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - s21_sscanf.c<span style="font-size: 80%;"> (source / <a href="s21_sscanf.c.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">report.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">301</td>
+            <td class="headerCovTableEntry">335</td>
+            <td class="headerCovTableEntryMed">89.9 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2024-06-12 22:55:43</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;s21_string.h&quot;</a>
+<a name="2"><span class="lineNum">       2 </span>            : </a>
+<a name="3"><span class="lineNum">       3 </span>            : #define DEFAULT_WIDTH 50</a>
+<a name="4"><span class="lineNum">       4 </span>            : </a>
+<a name="5"><span class="lineNum">       5 </span>            : typedef struct {</a>
+<a name="6"><span class="lineNum">       6 </span>            :   s21_size_t pos_str;</a>
+<a name="7"><span class="lineNum">       7 </span>            :   s21_size_t pos_format;</a>
+<a name="8"><span class="lineNum">       8 </span>            :   int count;</a>
+<a name="9"><span class="lineNum">       9 </span>            :   int error;</a>
+<a name="10"><span class="lineNum">      10 </span>            : } pos_format_t;</a>
+<a name="11"><span class="lineNum">      11 </span>            : </a>
+<a name="12"><span class="lineNum">      12 </span>            : typedef struct {</a>
+<a name="13"><span class="lineNum">      13 </span>            :   int start;</a>
+<a name="14"><span class="lineNum">      14 </span>            :   int end;</a>
+<a name="15"><span class="lineNum">      15 </span>            :   int width;</a>
+<a name="16"><span class="lineNum">      16 </span>            :   int size;</a>
+<a name="17"><span class="lineNum">      17 </span>            :   int ignor;</a>
+<a name="18"><span class="lineNum">      18 </span>            :   char type;</a>
+<a name="19"><span class="lineNum">      19 </span>            :   char flags;</a>
+<a name="20"><span class="lineNum">      20 </span>            :   int precision;</a>
+<a name="21"><span class="lineNum">      21 </span>            : } type_label_t;</a>
+<a name="22"><span class="lineNum">      22 </span>            : </a>
+<a name="23"><span class="lineNum">      23 </span>            : void check_format(const char *str, const char *format, va_list parm,</a>
+<a name="24"><span class="lineNum">      24 </span>            :                   pos_format_t *pf);</a>
+<a name="25"><span class="lineNum">      25 </span>            : type_label_t get_signature(const char *format, pos_format_t *pf);</a>
+<a name="26"><span class="lineNum">      26 </span>            : void cmp_symbol(const char *str, const char *format, pos_format_t *pf);</a>
+<a name="27"><span class="lineNum">      27 </span>            : int get_size_type(const char *format, s21_size_t *position);</a>
+<a name="28"><span class="lineNum">      28 </span>            : int is_digital(char ch, int base);</a>
+<a name="29"><span class="lineNum">      29 </span>            : int is_flag(char ch);</a>
+<a name="30"><span class="lineNum">      30 </span>            : int is_size(char ch);</a>
+<a name="31"><span class="lineNum">      31 </span>            : int is_end_str(char ch);</a>
+<a name="32"><span class="lineNum">      32 </span>            : int is_spec(char ch);</a>
+<a name="33"><span class="lineNum">      33 </span>            : int char_to_number(char ch);</a>
+<a name="34"><span class="lineNum">      34 </span>            : int check_format_base(const char *str, s21_size_t *position);</a>
+<a name="35"><span class="lineNum">      35 </span>            : long long int str_to_int(const char *str, s21_size_t *position, int base,</a>
+<a name="36"><span class="lineNum">      36 </span>            :                          int width, int *error);</a>
+<a name="37"><span class="lineNum">      37 </span>            : long double str_to_float(const char *format, pos_format_t *pf,</a>
+<a name="38"><span class="lineNum">      38 </span>            :                          type_label_t type);</a>
+<a name="39"><span class="lineNum">      39 </span>            : void find_and_set_value(type_label_t type, const char *str, pos_format_t *pf,</a>
+<a name="40"><span class="lineNum">      40 </span>            :                         va_list parm);</a>
+<a name="41"><span class="lineNum">      41 </span>            : void make_di(void *label, const char *str, pos_format_t *pf, type_label_t type);</a>
+<a name="42"><span class="lineNum">      42 </span>            : void make_c(void *label, const char *str, pos_format_t *pf, type_label_t type);</a>
+<a name="43"><span class="lineNum">      43 </span>            : void make_s(void *label, const char *str, pos_format_t *pf, type_label_t type);</a>
+<a name="44"><span class="lineNum">      44 </span>            : void make_fGgEe(void *label, const char *str, pos_format_t *pf,</a>
+<a name="45"><span class="lineNum">      45 </span>            :                 type_label_t type);</a>
+<a name="46"><span class="lineNum">      46 </span>            : void make_n(void *label, pos_format_t *pf, type_label_t type);</a>
+<a name="47"><span class="lineNum">      47 </span>            : void make_uoxX(void *label, const char *str, pos_format_t *pf,</a>
+<a name="48"><span class="lineNum">      48 </span>            :                type_label_t type);</a>
+<a name="49"><span class="lineNum">      49 </span>            : void make_p(void **label, const char *str, pos_format_t *pf, type_label_t type);</a>
+<a name="50"><span class="lineNum">      50 </span>            : </a>
+<a name="51"><span class="lineNum">      51 </span><span class="lineCov">         20 : int s21_sscanf(const char *str, const char *format, ...) {</span></a>
+<a name="52"><span class="lineNum">      52 </span><span class="lineCov">         20 :   s21_size_t len_format = s21_strlen(format);</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">         20 :   s21_size_t len_str = s21_strlen(str);</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">         20 :   pos_format_t pf = {0};</span></a>
+<a name="55"><span class="lineNum">      55 </span>            :   va_list parm;</a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineCov">         20 :   va_start(parm, format);</span></a>
+<a name="57"><span class="lineNum">      57 </span>            : </a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">         99 :   while (!pf.error &amp;&amp; pf.pos_format &lt; len_format &amp;&amp; pf.pos_str &lt; len_str) {</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">         79 :     check_format(str, format, parm, &amp;pf);</span></a>
+<a name="60"><span class="lineNum">      60 </span>            :   }</a>
+<a name="61"><span class="lineNum">      61 </span>            : </a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">         20 :   va_end(parm);</span></a>
+<a name="63"><span class="lineNum">      63 </span>            : </a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">         20 :   return pf.count;</span></a>
+<a name="65"><span class="lineNum">      65 </span>            : }</a>
+<a name="66"><span class="lineNum">      66 </span>            : </a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">         79 : void check_format(const char *str, const char *format, va_list parm,</span></a>
+<a name="68"><span class="lineNum">      68 </span>            :                   pos_format_t *pf) {</a>
+<a name="69"><span class="lineNum">      69 </span><span class="lineCov">        104 :   while (is_end_str(format[pf-&gt;pos_format])) pf-&gt;pos_format++;</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">         98 :   while (is_end_str(str[pf-&gt;pos_str])) pf-&gt;pos_str++;</span></a>
+<a name="71"><span class="lineNum">      71 </span>            : </a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineCov">         79 :   if (format[pf-&gt;pos_format] != '%') {</span></a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          3 :     cmp_symbol(str, format, pf);</span></a>
+<a name="74"><span class="lineNum">      74 </span>            :   } else {</a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">         76 :     type_label_t type = get_signature(format, pf);</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">         76 :     if (type.type != '\0') {</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">         76 :       find_and_set_value(type, str, pf, parm);</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">         76 :       if (type.type == '%') cmp_symbol(str, format, pf);</span></a>
+<a name="79"><span class="lineNum">      79 </span>            :     } else {</a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 :       cmp_symbol(str, format, pf);</span></a>
+<a name="81"><span class="lineNum">      81 </span>            :     }</a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">         76 :     if (type.type != 's')</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">        193 :       while (is_end_str(str[pf-&gt;pos_str])) pf-&gt;pos_str++;</span></a>
+<a name="84"><span class="lineNum">      84 </span>            :   }</a>
+<a name="85"><span class="lineNum">      85 </span><span class="lineCov">         79 : }</span></a>
+<a name="86"><span class="lineNum">      86 </span>            : </a>
+<a name="87"><span class="lineNum">      87 </span><span class="lineCov">          4 : void cmp_symbol(const char *str, const char *format, pos_format_t *pf) {</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          4 :   if (format[pf-&gt;pos_format] != str[pf-&gt;pos_str]) {</span></a>
+<a name="89"><span class="lineNum">      89 </span><span class="lineNoCov">          0 :     pf-&gt;error = 1;</span></a>
+<a name="90"><span class="lineNum">      90 </span>            :   } else {</a>
+<a name="91"><span class="lineNum">      91 </span><span class="lineCov">          4 :     pf-&gt;pos_str++;</span></a>
+<a name="92"><span class="lineNum">      92 </span><span class="lineCov">          4 :     pf-&gt;pos_format++;</span></a>
+<a name="93"><span class="lineNum">      93 </span>            :   }</a>
+<a name="94"><span class="lineNum">      94 </span><span class="lineCov">          4 : }</span></a>
+<a name="95"><span class="lineNum">      95 </span>            : </a>
+<a name="96"><span class="lineNum">      96 </span><span class="lineCov">         76 : type_label_t get_signature(const char *format, pos_format_t *pf) {</span></a>
+<a name="97"><span class="lineNum">      97 </span><span class="lineCov">         76 :   type_label_t label = {0};</span></a>
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">         76 :   label.start = pf-&gt;pos_format++;</span></a>
+<a name="99"><span class="lineNum">      99 </span>            : </a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">         76 :   if (is_flag(format[pf-&gt;pos_format])) pf-&gt;pos_format++;</span></a>
+<a name="101"><span class="lineNum">     101 </span>            : </a>
+<a name="102"><span class="lineNum">     102 </span><span class="lineCov">         76 :   if (format[pf-&gt;pos_format] == '*') {</span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          8 :     pf-&gt;pos_format++;</span></a>
+<a name="104"><span class="lineNum">     104 </span><span class="lineCov">          8 :     label.ignor = 1;</span></a>
+<a name="105"><span class="lineNum">     105 </span>            :   }</a>
+<a name="106"><span class="lineNum">     106 </span>            : </a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">         76 :   if (is_digital(format[pf-&gt;pos_format], 10)) {</span></a>
+<a name="108"><span class="lineNum">     108 </span><span class="lineCov">          8 :     label.width = str_to_int(format, &amp;pf-&gt;pos_format, 10, 0, NULL);</span></a>
+<a name="109"><span class="lineNum">     109 </span>            :   }</a>
+<a name="110"><span class="lineNum">     110 </span>            : </a>
+<a name="111"><span class="lineNum">     111 </span><span class="lineCov">         76 :   if (format[pf-&gt;pos_format] == '.') {</span></a>
+<a name="112"><span class="lineNum">     112 </span><span class="lineNoCov">          0 :     pf-&gt;pos_format++;</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineNoCov">          0 :     if (is_digital(format[pf-&gt;pos_format], 10)) {</span></a>
+<a name="114"><span class="lineNum">     114 </span><span class="lineNoCov">          0 :       pf-&gt;pos_format++;</span></a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineNoCov">          0 :     } else if (format[pf-&gt;pos_format] == '*') {</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineNoCov">          0 :       pf-&gt;pos_format++;</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineNoCov">          0 :       label.ignor = 1;</span></a>
+<a name="118"><span class="lineNum">     118 </span>            :     }</a>
+<a name="119"><span class="lineNum">     119 </span>            :   }</a>
+<a name="120"><span class="lineNum">     120 </span>            : </a>
+<a name="121"><span class="lineNum">     121 </span><span class="lineCov">         76 :   if (is_size(format[pf-&gt;pos_format])) {</span></a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineCov">         15 :     label.size = get_size_type(format, &amp;pf-&gt;pos_format);</span></a>
+<a name="123"><span class="lineNum">     123 </span>            :   }</a>
+<a name="124"><span class="lineNum">     124 </span>            : </a>
+<a name="125"><span class="lineNum">     125 </span><span class="lineCov">         76 :   if (is_spec(format[pf-&gt;pos_format])) {</span></a>
+<a name="126"><span class="lineNum">     126 </span><span class="lineCov">         76 :     label.type = format[pf-&gt;pos_format];</span></a>
+<a name="127"><span class="lineNum">     127 </span>            :   }</a>
+<a name="128"><span class="lineNum">     128 </span>            : </a>
+<a name="129"><span class="lineNum">     129 </span><span class="lineCov">         76 :   label.end = pf-&gt;pos_format++;</span></a>
+<a name="130"><span class="lineNum">     130 </span><span class="lineCov">         76 :   if (label.flags != '\0' || label.precision != 0 || label.type == '\0') {</span></a>
+<a name="131"><span class="lineNum">     131 </span><span class="lineNoCov">          0 :     pf-&gt;error = 4;</span></a>
+<a name="132"><span class="lineNum">     132 </span>            :   }</a>
+<a name="133"><span class="lineNum">     133 </span>            : </a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineCov">         76 :   return label;</span></a>
+<a name="135"><span class="lineNum">     135 </span>            : }</a>
+<a name="136"><span class="lineNum">     136 </span>            : </a>
+<a name="137"><span class="lineNum">     137 </span><span class="lineCov">         76 : void find_and_set_value(type_label_t type, const char *str, pos_format_t *pf,</span></a>
+<a name="138"><span class="lineNum">     138 </span>            :                         va_list parm) {</a>
+<a name="139"><span class="lineNum">     139 </span><span class="lineCov">         76 :   s21_size_t start = pf-&gt;pos_str;</span></a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineCov">         76 :   if (type.type == 'p') {</span></a>
+<a name="141"><span class="lineNum">     141 </span><span class="lineCov">          1 :     if (!type.ignor) {</span></a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          1 :       make_p(va_arg(parm, void **), str, pf, type);</span></a>
+<a name="143"><span class="lineNum">     143 </span>            :     } else {</a>
+<a name="144"><span class="lineNum">     144 </span><span class="lineNoCov">          0 :       make_p(s21_NULL, str, pf, type);</span></a>
+<a name="145"><span class="lineNum">     145 </span>            :     }</a>
+<a name="146"><span class="lineNum">     146 </span><span class="lineCov">         75 :   } else if (type.type == '%') {</span></a>
+<a name="147"><span class="lineNum">     147 </span><span class="lineCov">          1 :     if (type.width == 0) pf-&gt;pos_format = type.end;</span></a>
+<a name="148"><span class="lineNum">     148 </span>            :   } else {</a>
+<a name="149"><span class="lineNum">     149 </span><span class="lineCov">         74 :     void *label_void = s21_NULL;</span></a>
+<a name="150"><span class="lineNum">     150 </span><span class="lineCov">         74 :     if (!type.ignor) {</span></a>
+<a name="151"><span class="lineNum">     151 </span><span class="lineCov">         66 :       label_void = va_arg(parm, void *);</span></a>
+<a name="152"><span class="lineNum">     152 </span>            :     }</a>
+<a name="153"><span class="lineNum">     153 </span>            : </a>
+<a name="154"><span class="lineNum">     154 </span><span class="lineCov">         74 :     switch (type.type) {</span></a>
+<a name="155"><span class="lineNum">     155 </span><span class="lineCov">          4 :       case 'c':</span></a>
+<a name="156"><span class="lineNum">     156 </span><span class="lineCov">          4 :         make_c(label_void, str, pf, type);</span></a>
+<a name="157"><span class="lineNum">     157 </span><span class="lineCov">          4 :         break;</span></a>
+<a name="158"><span class="lineNum">     158 </span><span class="lineCov">         25 :       case 'd':</span></a>
+<a name="159"><span class="lineNum">     159 </span>            :       case 'i':</a>
+<a name="160"><span class="lineNum">     160 </span><span class="lineCov">         25 :         make_di(label_void, str, pf, type);</span></a>
+<a name="161"><span class="lineNum">     161 </span><span class="lineCov">         25 :         break;</span></a>
+<a name="162"><span class="lineNum">     162 </span><span class="lineCov">          8 :       case 's':</span></a>
+<a name="163"><span class="lineNum">     163 </span><span class="lineCov">          8 :         make_s(label_void, str, pf, type);</span></a>
+<a name="164"><span class="lineNum">     164 </span><span class="lineCov">          8 :         break;</span></a>
+<a name="165"><span class="lineNum">     165 </span><span class="lineCov">         13 :       case 'f':</span></a>
+<a name="166"><span class="lineNum">     166 </span>            :       case 'G':</a>
+<a name="167"><span class="lineNum">     167 </span>            :       case 'g':</a>
+<a name="168"><span class="lineNum">     168 </span>            :       case 'E':</a>
+<a name="169"><span class="lineNum">     169 </span>            :       case 'e':</a>
+<a name="170"><span class="lineNum">     170 </span><span class="lineCov">         13 :         make_fGgEe(label_void, str, pf, type);</span></a>
+<a name="171"><span class="lineNum">     171 </span><span class="lineCov">         13 :         break;</span></a>
+<a name="172"><span class="lineNum">     172 </span><span class="lineCov">         18 :       case 'o':</span></a>
+<a name="173"><span class="lineNum">     173 </span>            :       case 'u':</a>
+<a name="174"><span class="lineNum">     174 </span>            :       case 'x':</a>
+<a name="175"><span class="lineNum">     175 </span>            :       case 'X':</a>
+<a name="176"><span class="lineNum">     176 </span><span class="lineCov">         18 :         make_uoxX(label_void, str, pf, type);</span></a>
+<a name="177"><span class="lineNum">     177 </span><span class="lineCov">         18 :         break;</span></a>
+<a name="178"><span class="lineNum">     178 </span><span class="lineCov">          6 :       case 'n':</span></a>
+<a name="179"><span class="lineNum">     179 </span><span class="lineCov">          6 :         make_n(label_void, pf, type);</span></a>
+<a name="180"><span class="lineNum">     180 </span><span class="lineCov">          6 :         break;</span></a>
+<a name="181"><span class="lineNum">     181 </span><span class="lineNoCov">          0 :       default:</span></a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineNoCov">          0 :         pf-&gt;error = 20;</span></a>
+<a name="183"><span class="lineNum">     183 </span>            :     }</a>
+<a name="184"><span class="lineNum">     184 </span><span class="lineCov">         74 :     if (start == pf-&gt;pos_str &amp;&amp; type.type != '%' &amp;&amp; type.type != 'n')</span></a>
+<a name="185"><span class="lineNum">     185 </span><span class="lineCov">          2 :       pf-&gt;error = 9;</span></a>
+<a name="186"><span class="lineNum">     186 </span><span class="lineCov">         74 :     if (label_void != s21_NULL)</span></a>
+<a name="187"><span class="lineNum">     187 </span><span class="lineCov">         66 :       if (!pf-&gt;error) pf-&gt;count++;</span></a>
+<a name="188"><span class="lineNum">     188 </span>            :   }</a>
+<a name="189"><span class="lineNum">     189 </span><span class="lineCov">         76 : }</span></a>
+<a name="190"><span class="lineNum">     190 </span>            : </a>
+<a name="191"><span class="lineNum">     191 </span><span class="lineCov">          4 : void make_c(void *label, const char *str, pos_format_t *pf, type_label_t type) {</span></a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineCov">          4 :   int offset = 0;</span></a>
+<a name="193"><span class="lineNum">     193 </span><span class="lineCov">          4 :   if (type.width == 0) type.width = 1;</span></a>
+<a name="194"><span class="lineNum">     194 </span>            : </a>
+<a name="195"><span class="lineNum">     195 </span><span class="lineCov">         10 :   while (type.width &gt; 0) {</span></a>
+<a name="196"><span class="lineNum">     196 </span><span class="lineCov">          6 :     if (type.size == 0) {</span></a>
+<a name="197"><span class="lineNum">     197 </span><span class="lineCov">          6 :       if (!type.ignor)</span></a>
+<a name="198"><span class="lineNum">     198 </span><span class="lineCov">          6 :         *((char *)label + offset) = str[pf-&gt;pos_str++];</span></a>
+<a name="199"><span class="lineNum">     199 </span>            :       else</a>
+<a name="200"><span class="lineNum">     200 </span><span class="lineNoCov">          0 :         pf-&gt;pos_str++;</span></a>
+<a name="201"><span class="lineNum">     201 </span><span class="lineNoCov">          0 :     } else if (type.size == 1) {</span></a>
+<a name="202"><span class="lineNum">     202 </span>            :       wchar_t ch;</a>
+<a name="203"><span class="lineNum">     203 </span><span class="lineNoCov">          0 :       int bytes_read = mbtowc(&amp;ch, str + pf-&gt;pos_str, MB_CUR_MAX);</span></a>
+<a name="204"><span class="lineNum">     204 </span><span class="lineNoCov">          0 :       if (bytes_read &gt; 0) {</span></a>
+<a name="205"><span class="lineNum">     205 </span><span class="lineNoCov">          0 :         if (!type.ignor) *((wchar_t *)label + offset) = ch;</span></a>
+<a name="206"><span class="lineNum">     206 </span><span class="lineNoCov">          0 :         pf-&gt;pos_str += bytes_read;</span></a>
+<a name="207"><span class="lineNum">     207 </span>            :       } else {</a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineNoCov">          0 :         pf-&gt;error = 7;</span></a>
+<a name="209"><span class="lineNum">     209 </span>            :       }</a>
+<a name="210"><span class="lineNum">     210 </span>            :     } else {</a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineNoCov">          0 :       pf-&gt;error = 5;</span></a>
+<a name="212"><span class="lineNum">     212 </span>            :     }</a>
+<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          6 :     type.width--;</span></a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          6 :     offset++;</span></a>
+<a name="215"><span class="lineNum">     215 </span>            :   }</a>
+<a name="216"><span class="lineNum">     216 </span><span class="lineCov">          4 : }</span></a>
+<a name="217"><span class="lineNum">     217 </span>            : </a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineCov">         25 : void make_di(void *label, const char *str, pos_format_t *pf,</span></a>
+<a name="219"><span class="lineNum">     219 </span>            :              type_label_t type) {</a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">         25 :   long long int value = 0;</span></a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineCov">         25 :   int error = 0;</span></a>
+<a name="222"><span class="lineNum">     222 </span><span class="lineCov">         25 :   if (type.type == 'd')</span></a>
+<a name="223"><span class="lineNum">     223 </span><span class="lineCov">         18 :     value = str_to_int(str, &amp;pf-&gt;pos_str, 10, type.width, &amp;error);</span></a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineCov">          7 :   else if (type.type == 'i')</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineCov">          7 :     value = str_to_int(str, &amp;pf-&gt;pos_str, 0, type.width, &amp;error);</span></a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineCov">         25 :   pf-&gt;error = error;</span></a>
+<a name="227"><span class="lineNum">     227 </span><span class="lineCov">         25 :   if (!type.ignor) {</span></a>
+<a name="228"><span class="lineNum">     228 </span><span class="lineCov">         21 :     if (type.size == 0)</span></a>
+<a name="229"><span class="lineNum">     229 </span><span class="lineCov">         16 :       *((int *)label) = (int)value;</span></a>
+<a name="230"><span class="lineNum">     230 </span><span class="lineCov">          5 :     else if (type.size == 1)</span></a>
+<a name="231"><span class="lineNum">     231 </span><span class="lineCov">          3 :       *((long int *)label) = (long int)value;</span></a>
+<a name="232"><span class="lineNum">     232 </span><span class="lineCov">          2 :     else if (type.size == 2)</span></a>
+<a name="233"><span class="lineNum">     233 </span><span class="lineNoCov">          0 :       *((long long int *)label) = (long long int)value;</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineCov">          2 :     else if (type.size == 3)</span></a>
+<a name="235"><span class="lineNum">     235 </span><span class="lineCov">          2 :       *((short int *)label) = (short int)value;</span></a>
+<a name="236"><span class="lineNum">     236 </span><span class="lineNoCov">          0 :     else if (type.size == 4)</span></a>
+<a name="237"><span class="lineNum">     237 </span><span class="lineNoCov">          0 :       *((signed char *)label) = (signed char)value;</span></a>
+<a name="238"><span class="lineNum">     238 </span>            :   }</a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineCov">         25 : }</span></a>
+<a name="240"><span class="lineNum">     240 </span>            : </a>
+<a name="241"><span class="lineNum">     241 </span><span class="lineCov">         18 : void make_uoxX(void *label, const char *str, pos_format_t *pf,</span></a>
+<a name="242"><span class="lineNum">     242 </span>            :                type_label_t type) {</a>
+<a name="243"><span class="lineNum">     243 </span><span class="lineCov">         18 :   long long unsigned int value = 0;</span></a>
+<a name="244"><span class="lineNum">     244 </span><span class="lineCov">         18 :   int error = 0;</span></a>
+<a name="245"><span class="lineNum">     245 </span><span class="lineCov">         18 :   if (type.type == 'u') {</span></a>
+<a name="246"><span class="lineNum">     246 </span><span class="lineCov">          5 :     value = str_to_int(str, &amp;pf-&gt;pos_str, 10, type.width, &amp;error);</span></a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineCov">         13 :   } else if (type.type == 'o') {</span></a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineCov">          4 :     value = str_to_int(str, &amp;pf-&gt;pos_str, 8, type.width, &amp;error);</span></a>
+<a name="249"><span class="lineNum">     249 </span><span class="lineCov">          9 :   } else if (type.type == 'x' || type.type == 'X') {</span></a>
+<a name="250"><span class="lineNum">     250 </span><span class="lineCov">          9 :     value = str_to_int(str, &amp;pf-&gt;pos_str, 16, type.width, &amp;error);</span></a>
+<a name="251"><span class="lineNum">     251 </span>            :   }</a>
+<a name="252"><span class="lineNum">     252 </span><span class="lineCov">         18 :   pf-&gt;error = error;</span></a>
+<a name="253"><span class="lineNum">     253 </span><span class="lineCov">         18 :   if (!type.ignor) {</span></a>
+<a name="254"><span class="lineNum">     254 </span><span class="lineCov">         17 :     if (type.size == 0)</span></a>
+<a name="255"><span class="lineNum">     255 </span><span class="lineCov">         15 :       *((unsigned int *)label) = (unsigned int)value;</span></a>
+<a name="256"><span class="lineNum">     256 </span><span class="lineCov">          2 :     else if (type.size == 1)</span></a>
+<a name="257"><span class="lineNum">     257 </span><span class="lineCov">          1 :       *((long unsigned int *)label) = (long unsigned int)value;</span></a>
+<a name="258"><span class="lineNum">     258 </span><span class="lineCov">          1 :     else if (type.size == 2)</span></a>
+<a name="259"><span class="lineNum">     259 </span><span class="lineNoCov">          0 :       *((long long unsigned int *)label) = (long long unsigned int)value;</span></a>
+<a name="260"><span class="lineNum">     260 </span><span class="lineCov">          1 :     else if (type.size == 3)</span></a>
+<a name="261"><span class="lineNum">     261 </span><span class="lineCov">          1 :       *((short unsigned int *)label) = (short unsigned int)value;</span></a>
+<a name="262"><span class="lineNum">     262 </span><span class="lineNoCov">          0 :     else if (type.size == 4)</span></a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineNoCov">          0 :       *((unsigned char *)label) = (unsigned char)value;</span></a>
+<a name="264"><span class="lineNum">     264 </span>            :   }</a>
+<a name="265"><span class="lineNum">     265 </span><span class="lineCov">         18 : }</span></a>
+<a name="266"><span class="lineNum">     266 </span>            : </a>
+<a name="267"><span class="lineNum">     267 </span><span class="lineCov">          8 : void make_s(void *label, const char *str, pos_format_t *pf, type_label_t type) {</span></a>
+<a name="268"><span class="lineNum">     268 </span><span class="lineCov">          8 :   s21_size_t start = pf-&gt;pos_str;</span></a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineCov">          8 :   s21_size_t bytes_read = 0;</span></a>
+<a name="270"><span class="lineNum">     270 </span>            : </a>
+<a name="271"><span class="lineNum">     271 </span><span class="lineCov">          8 :   if (type.size == 0) {</span></a>
+<a name="272"><span class="lineNum">     272 </span><span class="lineCov">         51 :     while (!is_end_str(str[pf-&gt;pos_str]) &amp;&amp; str[pf-&gt;pos_str] != ' ' &amp;&amp;</span></a>
+<a name="273"><span class="lineNum">     273 </span><span class="lineCov">         51 :            str[pf-&gt;pos_str] != '\t' &amp;&amp; str[pf-&gt;pos_str] != '\n' &amp;&amp;</span></a>
+<a name="274"><span class="lineNum">     274 </span><span class="lineCov">         23 :            (type.width == 0 || pf-&gt;pos_str - start &lt; (s21_size_t)type.width)) {</span></a>
+<a name="275"><span class="lineNum">     275 </span><span class="lineCov">         22 :       if (!type.ignor) *((char *)label + bytes_read) = str[pf-&gt;pos_str];</span></a>
+<a name="276"><span class="lineNum">     276 </span><span class="lineCov">         22 :       pf-&gt;pos_str++;</span></a>
+<a name="277"><span class="lineNum">     277 </span><span class="lineCov">         22 :       bytes_read++;</span></a>
+<a name="278"><span class="lineNum">     278 </span>            :     }</a>
+<a name="279"><span class="lineNum">     279 </span><span class="lineCov">          6 :     if (!type.ignor) *((char *)label + bytes_read) = '\0';</span></a>
+<a name="280"><span class="lineNum">     280 </span><span class="lineCov">          2 :   } else if (type.size == 1) {</span></a>
+<a name="281"><span class="lineNum">     281 </span><span class="lineCov">         12 :     while (!is_end_str(str[pf-&gt;pos_str]) &amp;&amp; str[pf-&gt;pos_str] != ' ' &amp;&amp;</span></a>
+<a name="282"><span class="lineNum">     282 </span><span class="lineCov">         12 :            str[pf-&gt;pos_str] != '\t' &amp;&amp; str[pf-&gt;pos_str] != '\n' &amp;&amp;</span></a>
+<a name="283"><span class="lineNum">     283 </span><span class="lineCov">          5 :            (type.width == 0 || pf-&gt;pos_str - start &lt; (s21_size_t)type.width)) {</span></a>
+<a name="284"><span class="lineNum">     284 </span>            :       wchar_t ch;</a>
+<a name="285"><span class="lineNum">     285 </span><span class="lineCov">          5 :       int len = mbtowc(&amp;ch, str + pf-&gt;pos_str, MB_CUR_MAX);</span></a>
+<a name="286"><span class="lineNum">     286 </span><span class="lineCov">          5 :       if (len &gt; 0) {</span></a>
+<a name="287"><span class="lineNum">     287 </span><span class="lineCov">          5 :         if (!type.ignor) *((wchar_t *)label + bytes_read) = ch;</span></a>
+<a name="288"><span class="lineNum">     288 </span><span class="lineCov">          5 :         pf-&gt;pos_str += len;</span></a>
+<a name="289"><span class="lineNum">     289 </span><span class="lineCov">          5 :         bytes_read++;</span></a>
+<a name="290"><span class="lineNum">     290 </span>            :       } else {</a>
+<a name="291"><span class="lineNum">     291 </span><span class="lineNoCov">          0 :         pf-&gt;error = 7;</span></a>
+<a name="292"><span class="lineNum">     292 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="293"><span class="lineNum">     293 </span>            :       }</a>
+<a name="294"><span class="lineNum">     294 </span>            :     }</a>
+<a name="295"><span class="lineNum">     295 </span><span class="lineCov">          2 :     if (!type.ignor) *((wchar_t *)label + bytes_read) = L'\0';</span></a>
+<a name="296"><span class="lineNum">     296 </span>            :   }</a>
+<a name="297"><span class="lineNum">     297 </span><span class="lineCov">          8 : }</span></a>
+<a name="298"><span class="lineNum">     298 </span>            : </a>
+<a name="299"><span class="lineNum">     299 </span><span class="lineCov">         13 : void make_fGgEe(void *label, const char *str, pos_format_t *pf,</span></a>
+<a name="300"><span class="lineNum">     300 </span>            :                 type_label_t type) {</a>
+<a name="301"><span class="lineNum">     301 </span><span class="lineCov">         13 :   long double value = str_to_float(str, pf, type);</span></a>
+<a name="302"><span class="lineNum">     302 </span><span class="lineCov">         13 :   if (!type.ignor) {</span></a>
+<a name="303"><span class="lineNum">     303 </span><span class="lineCov">         13 :     if (type.size == 0)</span></a>
+<a name="304"><span class="lineNum">     304 </span><span class="lineCov">         11 :       *((float *)label) = (float)value;</span></a>
+<a name="305"><span class="lineNum">     305 </span><span class="lineCov">          2 :     else if (type.size == 1)</span></a>
+<a name="306"><span class="lineNum">     306 </span><span class="lineCov">          1 :       *((double *)label) = (double)value;</span></a>
+<a name="307"><span class="lineNum">     307 </span><span class="lineCov">          1 :     else if (type.size == 2)</span></a>
+<a name="308"><span class="lineNum">     308 </span><span class="lineCov">          1 :       *((long double *)label) = (long double)value;</span></a>
+<a name="309"><span class="lineNum">     309 </span>            :   }</a>
+<a name="310"><span class="lineNum">     310 </span><span class="lineCov">         13 : }</span></a>
+<a name="311"><span class="lineNum">     311 </span>            : </a>
+<a name="312"><span class="lineNum">     312 </span><span class="lineCov">          1 : void make_p(void **label, const char *str, pos_format_t *pf,</span></a>
+<a name="313"><span class="lineNum">     313 </span>            :             type_label_t type) {</a>
+<a name="314"><span class="lineNum">     314 </span>            :   long long int value =</a>
+<a name="315"><span class="lineNum">     315 </span><span class="lineCov">          1 :       str_to_int(str, &amp;pf-&gt;pos_str, 16, type.width, &amp;pf-&gt;error);</span></a>
+<a name="316"><span class="lineNum">     316 </span><span class="lineCov">          1 :   if (!type.ignor) {</span></a>
+<a name="317"><span class="lineNum">     317 </span><span class="lineCov">          1 :     *label = (void *)value;</span></a>
+<a name="318"><span class="lineNum">     318 </span>            :   }</a>
+<a name="319"><span class="lineNum">     319 </span><span class="lineCov">          1 : }</span></a>
+<a name="320"><span class="lineNum">     320 </span>            : </a>
+<a name="321"><span class="lineNum">     321 </span><span class="lineCov">          6 : void make_n(void *label, pos_format_t *pf, type_label_t type) {</span></a>
+<a name="322"><span class="lineNum">     322 </span><span class="lineCov">          6 :   s21_size_t value = 0;</span></a>
+<a name="323"><span class="lineNum">     323 </span><span class="lineCov">          6 :   if (!pf-&gt;error) value = pf-&gt;pos_str;</span></a>
+<a name="324"><span class="lineNum">     324 </span>            : </a>
+<a name="325"><span class="lineNum">     325 </span><span class="lineCov">          6 :   pf-&gt;count--;</span></a>
+<a name="326"><span class="lineNum">     326 </span><span class="lineCov">          6 :   if (!type.ignor) {</span></a>
+<a name="327"><span class="lineNum">     327 </span><span class="lineCov">          6 :     if (type.size == 0)</span></a>
+<a name="328"><span class="lineNum">     328 </span><span class="lineCov">          2 :       *((int *)label) = (int)value;</span></a>
+<a name="329"><span class="lineNum">     329 </span><span class="lineCov">          4 :     else if (type.size == 1)</span></a>
+<a name="330"><span class="lineNum">     330 </span><span class="lineCov">          1 :       *((long int *)label) = (long int)value;</span></a>
+<a name="331"><span class="lineNum">     331 </span><span class="lineCov">          3 :     else if (type.size == 2)</span></a>
+<a name="332"><span class="lineNum">     332 </span><span class="lineCov">          1 :       *((long long int *)label) = (long long int)value;</span></a>
+<a name="333"><span class="lineNum">     333 </span><span class="lineCov">          2 :     else if (type.size == 3)</span></a>
+<a name="334"><span class="lineNum">     334 </span><span class="lineCov">          1 :       *((short int *)label) = (short int)value;</span></a>
+<a name="335"><span class="lineNum">     335 </span><span class="lineCov">          1 :     else if (type.size == 4)</span></a>
+<a name="336"><span class="lineNum">     336 </span><span class="lineCov">          1 :       *((signed char *)label) = (signed char)value;</span></a>
+<a name="337"><span class="lineNum">     337 </span><span class="lineNoCov">          0 :     else if (type.size == 5)</span></a>
+<a name="338"><span class="lineNum">     338 </span><span class="lineNoCov">          0 :       pf-&gt;error = 5;</span></a>
+<a name="339"><span class="lineNum">     339 </span>            :   }</a>
+<a name="340"><span class="lineNum">     340 </span><span class="lineCov">          6 : }</span></a>
+<a name="341"><span class="lineNum">     341 </span>            : </a>
+<a name="342"><span class="lineNum">     342 </span><span class="lineCov">         13 : long double str_to_float(const char *format, pos_format_t *pf,</span></a>
+<a name="343"><span class="lineNum">     343 </span>            :                          type_label_t type) {</a>
+<a name="344"><span class="lineNum">     344 </span><span class="lineCov">         13 :   int sign = 1;</span></a>
+<a name="345"><span class="lineNum">     345 </span><span class="lineCov">         13 :   long double result = 0.0;</span></a>
+<a name="346"><span class="lineNum">     346 </span><span class="lineCov">         13 :   int exp_sign = 1;</span></a>
+<a name="347"><span class="lineNum">     347 </span><span class="lineCov">         13 :   int exponent = 0;</span></a>
+<a name="348"><span class="lineNum">     348 </span><span class="lineCov">         13 :   int decimal_part = 0;</span></a>
+<a name="349"><span class="lineNum">     349 </span><span class="lineCov">         13 :   int decimal_digits = 0;</span></a>
+<a name="350"><span class="lineNum">     350 </span><span class="lineCov">         13 :   s21_size_t *position = &amp;pf-&gt;pos_str;</span></a>
+<a name="351"><span class="lineNum">     351 </span><span class="lineCov">         13 :   int width = type.width == 0 ? DEFAULT_WIDTH : type.width;</span></a>
+<a name="352"><span class="lineNum">     352 </span>            : </a>
+<a name="353"><span class="lineNum">     353 </span><span class="lineCov">         13 :   if (format[*position] == '-') {</span></a>
+<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          5 :     sign = -1;</span></a>
+<a name="355"><span class="lineNum">     355 </span><span class="lineCov">          5 :     (*position)++;</span></a>
+<a name="356"><span class="lineNum">     356 </span><span class="lineCov">          5 :     width--;</span></a>
+<a name="357"><span class="lineNum">     357 </span><span class="lineCov">          8 :   } else if (format[*position] == '+') {</span></a>
+<a name="358"><span class="lineNum">     358 </span><span class="lineNoCov">          0 :     (*position)++;</span></a>
+<a name="359"><span class="lineNum">     359 </span><span class="lineNoCov">          0 :     width--;</span></a>
+<a name="360"><span class="lineNum">     360 </span>            :   }</a>
+<a name="361"><span class="lineNum">     361 </span>            : </a>
+<a name="362"><span class="lineNum">     362 </span><span class="lineCov">         13 :   if (width &gt;= 3) {</span></a>
+<a name="363"><span class="lineNum">     363 </span><span class="lineCov">         13 :     if (s21_strncasecmp(format + *position, &quot;nan&quot;, 3) == 0) {</span></a>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          3 :       *position += 3;</span></a>
+<a name="365"><span class="lineNum">     365 </span><span class="lineCov">          3 :       return sign * NAN;</span></a>
+<a name="366"><span class="lineNum">     366 </span><span class="lineCov">         10 :     } else if (s21_strncasecmp(format + *position, &quot;inf&quot;, 3) == 0) {</span></a>
+<a name="367"><span class="lineNum">     367 </span><span class="lineNoCov">          0 :       *position += 3;</span></a>
+<a name="368"><span class="lineNum">     368 </span><span class="lineNoCov">          0 :       return sign * INFINITY;</span></a>
+<a name="369"><span class="lineNum">     369 </span>            :     }</a>
+<a name="370"><span class="lineNum">     370 </span>            :   }</a>
+<a name="371"><span class="lineNum">     371 </span>            : </a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineCov">         31 :   while (is_digital(format[*position], 10) &amp;&amp; width &gt; 0) {</span></a>
+<a name="373"><span class="lineNum">     373 </span><span class="lineCov">         21 :     result = result * 10.0 + (format[*position] - '0');</span></a>
+<a name="374"><span class="lineNum">     374 </span><span class="lineCov">         21 :     (*position)++;</span></a>
+<a name="375"><span class="lineNum">     375 </span><span class="lineCov">         21 :     width--;</span></a>
+<a name="376"><span class="lineNum">     376 </span>            :   }</a>
+<a name="377"><span class="lineNum">     377 </span>            : </a>
+<a name="378"><span class="lineNum">     378 </span><span class="lineCov">         10 :   if (format[*position] == '.' &amp;&amp; width &gt; 0) {</span></a>
+<a name="379"><span class="lineNum">     379 </span><span class="lineCov">          9 :     (*position)++;</span></a>
+<a name="380"><span class="lineNum">     380 </span><span class="lineCov">          9 :     width--;</span></a>
+<a name="381"><span class="lineNum">     381 </span><span class="lineCov">         30 :     while (is_digital(format[*position], 10) &amp;&amp; width &gt; 0) {</span></a>
+<a name="382"><span class="lineNum">     382 </span><span class="lineCov">         21 :       decimal_part = decimal_part * 10 + (format[*position] - '0');</span></a>
+<a name="383"><span class="lineNum">     383 </span><span class="lineCov">         21 :       decimal_digits++;</span></a>
+<a name="384"><span class="lineNum">     384 </span><span class="lineCov">         21 :       (*position)++;</span></a>
+<a name="385"><span class="lineNum">     385 </span><span class="lineCov">         21 :       width--;</span></a>
+<a name="386"><span class="lineNum">     386 </span>            :     }</a>
+<a name="387"><span class="lineNum">     387 </span><span class="lineCov">          9 :     result += (long double)decimal_part / powl(10, decimal_digits);</span></a>
+<a name="388"><span class="lineNum">     388 </span>            :   }</a>
+<a name="389"><span class="lineNum">     389 </span>            : </a>
+<a name="390"><span class="lineNum">     390 </span><span class="lineCov">         10 :   if ((format[*position] == 'E' || format[*position] == 'e') &amp;&amp; width &gt; 0) {</span></a>
+<a name="391"><span class="lineNum">     391 </span><span class="lineCov">          5 :     (*position)++;</span></a>
+<a name="392"><span class="lineNum">     392 </span><span class="lineCov">          5 :     width--;</span></a>
+<a name="393"><span class="lineNum">     393 </span><span class="lineCov">          5 :     if (format[*position] == '-' &amp;&amp; width &gt; 0) {</span></a>
+<a name="394"><span class="lineNum">     394 </span><span class="lineCov">          4 :       exp_sign = -1;</span></a>
+<a name="395"><span class="lineNum">     395 </span><span class="lineCov">          4 :       (*position)++;</span></a>
+<a name="396"><span class="lineNum">     396 </span><span class="lineCov">          4 :       width--;</span></a>
+<a name="397"><span class="lineNum">     397 </span><span class="lineCov">          1 :     } else if (format[*position] == '+' &amp;&amp; width &gt; 0) {</span></a>
+<a name="398"><span class="lineNum">     398 </span><span class="lineCov">          1 :       (*position)++;</span></a>
+<a name="399"><span class="lineNum">     399 </span><span class="lineCov">          1 :       width--;</span></a>
+<a name="400"><span class="lineNum">     400 </span>            :     }</a>
+<a name="401"><span class="lineNum">     401 </span><span class="lineCov">         15 :     while (is_digital(format[*position], 10) &amp;&amp; width &gt; 0) {</span></a>
+<a name="402"><span class="lineNum">     402 </span><span class="lineCov">         10 :       exponent = exponent * 10 + (format[*position] - '0');</span></a>
+<a name="403"><span class="lineNum">     403 </span><span class="lineCov">         10 :       (*position)++;</span></a>
+<a name="404"><span class="lineNum">     404 </span><span class="lineCov">         10 :       width--;</span></a>
+<a name="405"><span class="lineNum">     405 </span>            :     }</a>
+<a name="406"><span class="lineNum">     406 </span><span class="lineCov">          5 :     result *= powl(10, exp_sign * exponent);</span></a>
+<a name="407"><span class="lineNum">     407 </span>            :   }</a>
+<a name="408"><span class="lineNum">     408 </span>            : </a>
+<a name="409"><span class="lineNum">     409 </span><span class="lineCov">         10 :   return sign * result;</span></a>
+<a name="410"><span class="lineNum">     410 </span>            : }</a>
+<a name="411"><span class="lineNum">     411 </span>            : </a>
+<a name="412"><span class="lineNum">     412 </span><span class="lineCov">         52 : long long int str_to_int(const char *str, s21_size_t *position, int base,</span></a>
+<a name="413"><span class="lineNum">     413 </span>            :                          int width, int *error) {</a>
+<a name="414"><span class="lineNum">     414 </span><span class="lineCov">         52 :   long long int value = 0;</span></a>
+<a name="415"><span class="lineNum">     415 </span><span class="lineCov">         52 :   int sign_multiplier = 1;</span></a>
+<a name="416"><span class="lineNum">     416 </span><span class="lineCov">         52 :   int digital = 0;</span></a>
+<a name="417"><span class="lineNum">     417 </span>            : </a>
+<a name="418"><span class="lineNum">     418 </span><span class="lineCov">         52 :   if (width == 0) width = DEFAULT_WIDTH;</span></a>
+<a name="419"><span class="lineNum">     419 </span>            : </a>
+<a name="420"><span class="lineNum">     420 </span><span class="lineCov">         52 :   if (str[*position] == '-') {</span></a>
+<a name="421"><span class="lineNum">     421 </span><span class="lineCov">         14 :     sign_multiplier = -1;</span></a>
+<a name="422"><span class="lineNum">     422 </span><span class="lineCov">         14 :     (*position)++;</span></a>
+<a name="423"><span class="lineNum">     423 </span><span class="lineCov">         14 :     width--;</span></a>
+<a name="424"><span class="lineNum">     424 </span><span class="lineCov">         38 :   } else if (str[*position] == '+') {</span></a>
+<a name="425"><span class="lineNum">     425 </span><span class="lineCov">          1 :     (*position)++;</span></a>
+<a name="426"><span class="lineNum">     426 </span><span class="lineCov">          1 :     width--;</span></a>
+<a name="427"><span class="lineNum">     427 </span>            :   }</a>
+<a name="428"><span class="lineNum">     428 </span>            : </a>
+<a name="429"><span class="lineNum">     429 </span><span class="lineCov">         52 :   if (base == 0) base = check_format_base(str, position);</span></a>
+<a name="430"><span class="lineNum">     430 </span>            : </a>
+<a name="431"><span class="lineNum">     431 </span><span class="lineCov">         52 :   if (base == 16 &amp;&amp; str[*position] == '0' &amp;&amp;</span></a>
+<a name="432"><span class="lineNum">     432 </span><span class="lineCov">          8 :       (str[*position + 1] == 'x' || str[*position + 1] == 'X')) {</span></a>
+<a name="433"><span class="lineNum">     433 </span><span class="lineCov">          6 :     (*position) += 2;</span></a>
+<a name="434"><span class="lineNum">     434 </span><span class="lineCov">          6 :     width -= 2;</span></a>
+<a name="435"><span class="lineNum">     435 </span><span class="lineCov">          6 :     digital = 1;</span></a>
+<a name="436"><span class="lineNum">     436 </span><span class="lineCov">         46 :   } else if (base == 8 &amp;&amp; str[*position] == '0') {</span></a>
+<a name="437"><span class="lineNum">     437 </span><span class="lineCov">          3 :     (*position)++;</span></a>
+<a name="438"><span class="lineNum">     438 </span><span class="lineCov">          3 :     width--;</span></a>
+<a name="439"><span class="lineNum">     439 </span><span class="lineCov">          3 :     digital = 1;</span></a>
+<a name="440"><span class="lineNum">     440 </span>            :   }</a>
+<a name="441"><span class="lineNum">     441 </span>            : </a>
+<a name="442"><span class="lineNum">     442 </span><span class="lineCov">        220 :   while (is_digital(str[*position], base) &amp;&amp; width &gt; 0) {</span></a>
+<a name="443"><span class="lineNum">     443 </span><span class="lineCov">        168 :     if (value != 0) value *= base;</span></a>
+<a name="444"><span class="lineNum">     444 </span><span class="lineCov">        168 :     value += char_to_number(str[(*position)++]);</span></a>
+<a name="445"><span class="lineNum">     445 </span><span class="lineCov">        168 :     digital++;</span></a>
+<a name="446"><span class="lineNum">     446 </span><span class="lineCov">        168 :     width--;</span></a>
+<a name="447"><span class="lineNum">     447 </span>            :   }</a>
+<a name="448"><span class="lineNum">     448 </span>            : </a>
+<a name="449"><span class="lineNum">     449 </span><span class="lineCov">         52 :   if (digital == 0 &amp;&amp; error != s21_NULL) *error = 12;</span></a>
+<a name="450"><span class="lineNum">     450 </span>            : </a>
+<a name="451"><span class="lineNum">     451 </span><span class="lineCov">         52 :   return value * sign_multiplier;</span></a>
+<a name="452"><span class="lineNum">     452 </span>            : }</a>
+<a name="453"><span class="lineNum">     453 </span>            : </a>
+<a name="454"><span class="lineNum">     454 </span><span class="lineCov">          7 : int check_format_base(const char *str, s21_size_t *position) {</span></a>
+<a name="455"><span class="lineNum">     455 </span><span class="lineCov">          7 :   int base = 10;</span></a>
+<a name="456"><span class="lineNum">     456 </span><span class="lineCov">          7 :   if (str[*position] == '0') {</span></a>
+<a name="457"><span class="lineNum">     457 </span><span class="lineCov">          4 :     if (str[*position + 1] == 'x')</span></a>
+<a name="458"><span class="lineNum">     458 </span><span class="lineCov">          2 :       base = 16;</span></a>
+<a name="459"><span class="lineNum">     459 </span>            :     else</a>
+<a name="460"><span class="lineNum">     460 </span><span class="lineCov">          2 :       base = 8;</span></a>
+<a name="461"><span class="lineNum">     461 </span>            :   }</a>
+<a name="462"><span class="lineNum">     462 </span><span class="lineCov">          7 :   return base;</span></a>
+<a name="463"><span class="lineNum">     463 </span>            : }</a>
+<a name="464"><span class="lineNum">     464 </span>            : </a>
+<a name="465"><span class="lineNum">     465 </span><span class="lineCov">        372 : int is_digital(char ch, int base) {</span></a>
+<a name="466"><span class="lineNum">     466 </span><span class="lineCov">        372 :   int res = 1;</span></a>
+<a name="467"><span class="lineNum">     467 </span><span class="lineCov">        372 :   if (base == 8)</span></a>
+<a name="468"><span class="lineNum">     468 </span><span class="lineCov">         21 :     res = ch &gt;= '0' &amp;&amp; ch &lt;= '8';</span></a>
+<a name="469"><span class="lineNum">     469 </span><span class="lineCov">        351 :   else if (base == 10)</span></a>
+<a name="470"><span class="lineNum">     470 </span><span class="lineCov">        294 :     res = (ch &gt;= '0' &amp;&amp; ch &lt;= '9');</span></a>
+<a name="471"><span class="lineNum">     471 </span><span class="lineCov">         57 :   else if (base == 16)</span></a>
+<a name="472"><span class="lineNum">     472 </span><span class="lineCov">         61 :     res = (ch &gt;= '0' &amp;&amp; ch &lt;= '9') || (ch &gt;= 'a' &amp;&amp; ch &lt;= 'f') ||</span></a>
+<a name="473"><span class="lineNum">     473 </span><span class="lineCov">          4 :           (ch &gt;= 'A' &amp;&amp; ch &lt;= 'F');</span></a>
+<a name="474"><span class="lineNum">     474 </span><span class="lineCov">        372 :   return res;</span></a>
+<a name="475"><span class="lineNum">     475 </span>            : }</a>
+<a name="476"><span class="lineNum">     476 </span>            : </a>
+<a name="477"><span class="lineNum">     477 </span><span class="lineCov">         76 : int is_flag(char ch) {</span></a>
+<a name="478"><span class="lineNum">     478 </span><span class="lineCov">         76 :   return (ch == '-' || ch == '+' || ch == ' ' || ch == '#' || ch == '0');</span></a>
+<a name="479"><span class="lineNum">     479 </span>            : }</a>
+<a name="480"><span class="lineNum">     480 </span>            : </a>
+<a name="481"><span class="lineNum">     481 </span><span class="lineCov">         76 : int is_size(char ch) { return (ch == 'h' || ch == 'l' || ch == 'L'); }</span></a>
+<a name="482"><span class="lineNum">     482 </span>            : </a>
+<a name="483"><span class="lineNum">     483 </span><span class="lineCov">        430 : int is_end_str(char ch) {</span></a>
+<a name="484"><span class="lineNum">     484 </span><span class="lineCov">        430 :   return (ch == '\0' || ch == '\n' || ch == '\t' || ch == ' ');</span></a>
+<a name="485"><span class="lineNum">     485 </span>            : }</a>
+<a name="486"><span class="lineNum">     486 </span>            : </a>
+<a name="487"><span class="lineNum">     487 </span><span class="lineCov">         76 : int is_spec(char ch) {</span></a>
+<a name="488"><span class="lineNum">     488 </span><span class="lineCov">         58 :   return (ch == 'd' || ch == 'i' || ch == 'o' || ch == 'u' || ch == 'x' ||</span></a>
+<a name="489"><span class="lineNum">     489 </span><span class="lineCov">         33 :           ch == 'X' || ch == 'f' || ch == 'F' || ch == 'e' || ch == 'E' ||</span></a>
+<a name="490"><span class="lineNum">     490 </span><span class="lineCov">         20 :           ch == 'g' || ch == 'G' || ch == 'a' || ch == 'A' || ch == 'c' ||</span></a>
+<a name="491"><span class="lineNum">     491 </span><span class="lineCov">        134 :           ch == 's' || ch == 'p' || ch == 'n' || ch == '%');</span></a>
+<a name="492"><span class="lineNum">     492 </span>            : }</a>
+<a name="493"><span class="lineNum">     493 </span>            : </a>
+<a name="494"><span class="lineNum">     494 </span><span class="lineCov">        168 : int char_to_number(char ch) {</span></a>
+<a name="495"><span class="lineNum">     495 </span><span class="lineCov">        168 :   int number = 0;</span></a>
+<a name="496"><span class="lineNum">     496 </span><span class="lineCov">        168 :   if (ch &gt;= '0' &amp;&amp; ch &lt;= '9')</span></a>
+<a name="497"><span class="lineNum">     497 </span><span class="lineCov">        160 :     number = ch - '0';</span></a>
+<a name="498"><span class="lineNum">     498 </span><span class="lineCov">          8 :   else if (ch &gt;= 'a' &amp;&amp; ch &lt;= 'f')</span></a>
+<a name="499"><span class="lineNum">     499 </span><span class="lineCov">          6 :     number = ch - 'a' + 10;</span></a>
+<a name="500"><span class="lineNum">     500 </span><span class="lineCov">          2 :   else if (ch &gt;= 'A' &amp;&amp; ch &lt;= 'F')</span></a>
+<a name="501"><span class="lineNum">     501 </span><span class="lineCov">          2 :     number = ch - 'A' + 10;</span></a>
+<a name="502"><span class="lineNum">     502 </span><span class="lineCov">        168 :   return number;</span></a>
+<a name="503"><span class="lineNum">     503 </span>            : }</a>
+<a name="504"><span class="lineNum">     504 </span>            : </a>
+<a name="505"><span class="lineNum">     505 </span><span class="lineCov">         15 : int get_size_type(const char *format, s21_size_t *position) {</span></a>
+<a name="506"><span class="lineNum">     506 </span><span class="lineCov">         15 :   int size = 0;</span></a>
+<a name="507"><span class="lineNum">     507 </span><span class="lineCov">         15 :   if (format[*position] == 'h') {</span></a>
+<a name="508"><span class="lineNum">     508 </span><span class="lineCov">          5 :     (*position)++;</span></a>
+<a name="509"><span class="lineNum">     509 </span><span class="lineCov">          5 :     size = format[*position] == 'h' ? (++(*position), 4) : 3;</span></a>
+<a name="510"><span class="lineNum">     510 </span><span class="lineCov">         10 :   } else if (format[*position] == 'l') {</span></a>
+<a name="511"><span class="lineNum">     511 </span><span class="lineCov">          9 :     (*position)++;</span></a>
+<a name="512"><span class="lineNum">     512 </span><span class="lineCov">          9 :     size = format[*position] == 'l' ? (++(*position), 2) : 1;</span></a>
+<a name="513"><span class="lineNum">     513 </span><span class="lineCov">          1 :   } else if (format[*position] == 'L') {</span></a>
+<a name="514"><span class="lineNum">     514 </span><span class="lineCov">          1 :     (*position)++;</span></a>
+<a name="515"><span class="lineNum">     515 </span><span class="lineCov">          1 :     size = 2;</span></a>
+<a name="516"><span class="lineNum">     516 </span>            :   }</a>
+<a name="517"><span class="lineNum">     517 </span><span class="lineCov">         15 :   return size;</span></a>
+<a name="518"><span class="lineNum">     518 </span>            : }</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

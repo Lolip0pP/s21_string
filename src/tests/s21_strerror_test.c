@@ -16,6 +16,9 @@ START_TEST(test_strerror) {
   for (int i = 0; i < 106; i++) {
     ck_assert_str_eq(s21_strerror(i), strerror(i));
   }
+  ck_assert_str_eq(s21_strerror(5), strerror(5));
+  ck_assert_str_eq(s21_strerror(155), strerror(155));
+  ck_assert_str_eq(s21_strerror(0), strerror(0));
 #endif
 
 #ifdef S21_OS_LINUX

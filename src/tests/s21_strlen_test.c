@@ -1,16 +1,14 @@
 #include "test.h"
 
 START_TEST(test_strlen_1) {
-  ck_assert_int_eq(s21_strlen("hello"), strlen("hello"));
+  ck_assert_int_eq(s21_strlen("hello/0"), strlen("hello/0"));
 }
 END_TEST
 
 START_TEST(test_strlen_2) { ck_assert_int_eq(s21_strlen("11"), strlen("11")); }
 END_TEST
 
-START_TEST(test_strlen_3) {
-  ck_assert_int_eq(s21_strlen("privet"), strlen("privet"));
-}
+START_TEST(test_strlen_3) { ck_assert_int_eq(s21_strlen("/n"), strlen("/n")); }
 END_TEST
 
 START_TEST(test_strlen_4) {

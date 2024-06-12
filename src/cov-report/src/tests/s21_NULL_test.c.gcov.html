@@ -10,86 +10,86 @@
 
 <body>
 
-          <table width="100%" border=0 cellspacing=0 cellpadding=0>
-            <tr><td class="title">LCOV - code coverage report</td></tr>
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
 
-            <tr>
-              <td width="100%">
-                <table cellpadding=1 border=0 width="100%">
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
           <tr>
             <td width="10%" class="headerItem">Current view:</td>
-            <td width="10%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/tests</a> - s21_NULL_test.c<span style="font-size: 80%;"> (source / <a href="s21_NULL_test.c.func-c.html">functions</a>)</span></td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/tests</a> - s21_NULL_test.c<span style="font-size: 80%;"> (source / <a href="s21_NULL_test.c.func-sort-c.html">functions</a>)</span></td>
             <td width="5%"></td>
-            <td width="5%"></td>
-            <td width="5%" class="headerCovTableHead">Coverage</td>
-            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
-            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
           </tr>
           <tr>
             <td class="headerItem">Test:</td>
             <td class="headerValue">report.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
             <td class="headerCovTableEntry">7</td>
             <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
-            <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-05-27 20:18:14</td>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2024-06-12 22:55:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
             <td class="headerCovTableEntry">2</td>
             <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
-                  <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-                </table>
-              </td>
-            </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
 
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-          </table>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
 
-          <table cellpadding=0 cellspacing=0 border=0>
-            <tr>
-              <td><br></td>
-            </tr>
-            <tr>
-              <td>
-<pre class="sourceHeading">            Line data    Source code</pre>
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
 <pre class="source">
-<span id="L1"><span class="lineNum">       1</span>              : #include &quot;test.h&quot;</span>
-<span id="L2"><span class="lineNum">       2</span>              : </span>
-<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC tlaBgGNC">           1 : START_TEST(test_NULL) { ck_assert_ptr_eq(s21_NULL, NULL); }</span></span>
-<span id="L4"><span class="lineNum">       4</span>              : </span>
-<span id="L5"><span class="lineNum">       5</span>              : END_TEST</span>
-<span id="L6"><span class="lineNum">       6</span>              : </span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">         173 : Suite* s21_NULL_test(void) {</span></span>
-<span id="L8"><span class="lineNum">       8</span>              :   Suite* suite;</span>
-<span id="L9"><span class="lineNum">       9</span>              :   TCase* core;</span>
-<span id="L10"><span class="lineNum">      10</span>              : </span>
-<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">         173 :   suite = suite_create(&quot;s21_NULL&quot;);</span></span>
-<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">         173 :   core = tcase_create(&quot;Core&quot;);</span></span>
-<span id="L13"><span class="lineNum">      13</span>              : </span>
-<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">         173 :   tcase_add_test(core, test_NULL);</span></span>
-<span id="L15"><span class="lineNum">      15</span>              : </span>
-<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">         173 :   suite_add_tcase(suite, core);</span></span>
-<span id="L17"><span class="lineNum">      17</span>              : </span>
-<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">         173 :   return (suite);</span></span>
-<span id="L19"><span class="lineNum">      19</span>              : }</span>
-        </pre>
-              </td>
-            </tr>
-          </table>
-          <br>
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;test.h&quot;</a>
+<a name="2"><span class="lineNum">       2 </span>            : </a>
+<a name="3"><span class="lineNum">       3 </span><span class="lineCov">          1 : START_TEST(test_NULL) { ck_assert_ptr_eq(s21_NULL, NULL); }</span></a>
+<a name="4"><span class="lineNum">       4 </span>            : </a>
+<a name="5"><span class="lineNum">       5 </span>            : END_TEST</a>
+<a name="6"><span class="lineNum">       6 </span>            : </a>
+<a name="7"><span class="lineNum">       7 </span><span class="lineCov">        304 : Suite* s21_NULL_test(void) {</span></a>
+<a name="8"><span class="lineNum">       8 </span>            :   Suite* suite;</a>
+<a name="9"><span class="lineNum">       9 </span>            :   TCase* core;</a>
+<a name="10"><span class="lineNum">      10 </span>            : </a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">        304 :   suite = suite_create(&quot;s21_NULL&quot;);</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineCov">        304 :   core = tcase_create(&quot;Core&quot;);</span></a>
+<a name="13"><span class="lineNum">      13 </span>            : </a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">        304 :   tcase_add_test(core, test_NULL);</span></a>
+<a name="15"><span class="lineNum">      15 </span>            : </a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">        304 :   suite_add_tcase(suite, core);</span></a>
+<a name="17"><span class="lineNum">      17 </span>            : </a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineCov">        304 :   return (suite);</span></a>
+<a name="19"><span class="lineNum">      19 </span>            : }</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
 
-          <table width="100%" border=0 cellspacing=0 cellpadding=0>
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
-          </table>
-          <br>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
 
 </body>
 </html>

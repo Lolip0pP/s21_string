@@ -1,13 +1,6 @@
 #ifndef CHECK_TEST_EXAMPLE_TEST_H
 #define CHECK_TEST_EXAMPLE_TEST_H
 
-/**
-install check: https://libcheck.github.io/check/web/install.html
-
-then add an environment variables as follows
-export CPATH=/opt/homebrew/include
-export LIBRARY_PATH=/opt/homebrew/lib
-**/
 #include <check.h>
 
 #include "../s21_string.h"
@@ -31,6 +24,10 @@ Suite* s21_NULL_test(void);
 Suite* s21_size_t_test(void);
 Suite* s21_strerror_test(void);
 Suite* s21_to_upper_test(void);
-Suite *s21_to_lower_test(void);
+Suite* s21_to_lower_test(void);
+Suite* s21_insert_test(void);
+Suite* s21_trim_test(void);
+Suite* s21_sprintf_test(void);
+Suite* s21_sscanf_test(void);
 
-#endif  // CHECK_TEST_EXAMPLE_TEST_H
+#endif

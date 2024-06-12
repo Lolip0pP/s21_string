@@ -1,1 +1,0 @@
-genhtml -o ./cov-report/ report.info

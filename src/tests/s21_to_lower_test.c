@@ -80,6 +80,13 @@ START_TEST(test_to_lower_10) {
 }
 END_TEST
 
+START_TEST(test_to_lower_11) {
+  char *string1 = s21_to_lower(s21_NULL);
+  ck_assert_ptr_eq(string1, NULL);
+  free(string1);
+}
+END_TEST
+
 Suite *s21_to_lower_test(void) {
   Suite *suite;
   TCase *core;
@@ -97,6 +104,7 @@ Suite *s21_to_lower_test(void) {
   tcase_add_test(core, test_to_lower_8);
   tcase_add_test(core, test_to_lower_9);
   tcase_add_test(core, test_to_lower_10);
+  tcase_add_test(core, test_to_lower_11);
 
   suite_add_tcase(suite, core);
 
