@@ -44,4 +44,4 @@ int s21_sprintf(char *result, const char *format, ...);
 int s21_find_trim_chars(char c, const char *trim_chars);
 char *s21_strcpy(char *dest, const char *src);
 
-#endif  // S21_STRING_H
+#endif

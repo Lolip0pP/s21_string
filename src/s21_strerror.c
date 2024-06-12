@@ -2,7 +2,6 @@
 
 #include "s21_string.h"
 
-// Макрос для определения операционной системы
 #ifdef __APPLE__
 #define S21_OS_MACOS
 #endif
@@ -11,7 +10,6 @@
 #define S21_OS_LINUX
 #endif
 
-// Макросы с сообщениями об ошибках для macOS
 #ifdef S21_OS_MACOS
 static const char *error_list[] = {
     "Undefined error: 0",
@@ -123,7 +121,6 @@ static const char *error_list[] = {
     "Interface output queue is full"};
 #endif
 
-// Макросы с сообщениями об ошибках для Linux
 #ifdef S21_OS_LINUX
 static const char *error_list[] = {
     "Success",

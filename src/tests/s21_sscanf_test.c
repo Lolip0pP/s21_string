@@ -122,10 +122,7 @@ START_TEST(test_s21_sscanf_error_read_sc) {
   s21_count =
       s21_sscanf(str, "%s %ls %3d %5c %*s %*3s %s", a2, b2, &i2, c2, d2);
   ck_assert_str_eq(a, a2);
-  // ck_assert_str_eq(b, b2);
   ck_assert_int_eq(i, i2);
-  // ck_assert_str_eq(c, c2);
-  // ck_assert_str_eq(d, d2);
   ck_assert_int_eq(s21_count, sys_count);
 }
 END_TEST
@@ -269,7 +266,6 @@ START_TEST(test_s21_sscanf_p) {
   sscanf(temp, "%p", &p2a);
   s21_sscanf(temp, "%p", &p3a);
   ck_assert_ptr_eq(p2a, p3a);
-  // ck_assert_int_eq(*p2a, *p3a);
 }
 END_TEST
 
