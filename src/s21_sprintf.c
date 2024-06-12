@@ -78,9 +78,7 @@ int read_specifier(char *result, char spec, setup_t setup, va_list *params) {
   else if (s21_strchr("fgGeE", spec))
     get_arg = get_double, setup.flags |= (F_FLOAT | F_START);
 
-  if (spec == 'c') {
-  } else if (spec == 's') {
-  } else if (s21_strchr("xX", spec))
+  if (s21_strchr("xX", spec))
     setup.flags |= F_HEX;
   else if (spec == 'o')
     setup.flags |= F_OCT;

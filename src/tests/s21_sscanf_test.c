@@ -318,10 +318,9 @@ START_TEST(test_s21_sscanf_u) {
 }
 END_TEST
 
-Suite* s21_sscanf_test(void) {
-  
-  Suite* suite;
-  TCase* core;
+Suite *s21_sscanf_test(void) {
+  Suite *suite;
+  TCase *core;
 
   suite = suite_create("s21_sscanf");
   core = tcase_create("Core");

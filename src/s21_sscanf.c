@@ -347,7 +347,6 @@ long double str_to_float(const char *format, pos_format_t *pf,
   int exponent = 0;
   int decimal_part = 0;
   int decimal_digits = 0;
-  s21_size_t start = pf->pos_str;
   s21_size_t *position = &pf->pos_str;
   int width = type.width == 0 ? DEFAULT_WIDTH : type.width;
 
