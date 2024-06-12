@@ -9,20 +9,17 @@ const int flags_sz_val[] = {F_SHORT, F_LONG_I, F_LONG_D};
 int s21_sprintf(char *result, const char *format, ...) {
     int lenght = 0;
     setup_t setup;
-
-    //Аргументы 
     va_list params;
     va_start(params, format);
 
     for (int cur = 0; format[cur] != '\0'; cur++) {
 
         if (format[cur] == '%') {
-            // Настройки форматирования
             setup = get_setup(&cur, format, &params);
 
             if (format[cur] == 'n')
                 *(va_arg(params, int*)) = lenght;
-            else // Чтение спецификатора
+            else
                 lenght += read_specifier(result + lenght, format[cur], setup, &params);
         }
         else {
@@ -32,7 +29,6 @@ int s21_sprintf(char *result, const char *format, ...) {
     } 
 
     va_end(params);
-
     result[lenght] = '\0';
 
     return lenght;
@@ -41,15 +37,12 @@ int s21_sprintf(char *result, const char *format, ...) {
 setup_t get_setup(int *cur, const char *format, va_list *params) {
     setup_t setup = {.accuracy = -1};
 
-    // Флаги опций 
     for (*cur += 1; s21_strchr(fl_opt, format[*cur]); *cur += 1)
         setup.flags |= flags_opt_val[s21_strchr(fl_opt, format[*cur]) - fl_opt];
 
-    // Ширина
     for (; s21_strchr("0123456789", format[*cur]); *cur += 1)
         setup.width = (setup.width * 10) + (format[*cur] - '0');
 
-    // Ширина через *
     for (; format[*cur] == '*'; *cur += 1)
         setup.width = va_arg(*params, int);
 
@@ -57,19 +50,15 @@ setup_t get_setup(int *cur, const char *format, va_list *params) {
         *cur += 1;
 
         setup.accuracy = 0;
-
         setup.flags |= F_ACCURACY;
 
-        // Точность
         for (; s21_strchr("0123456789", format[*cur]); *cur += 1) 
             setup.accuracy = (setup.accuracy * 10) + (format[*cur] - '0');
 
-        // Точность через *
         for (; format[*cur] == '*'; *cur += 1)
             setup.accuracy = va_arg(*params, int);
     }
 
-    // Флаги типа
     for (; s21_strchr(fl_sz, format[*cur]); *cur += 1)
         setup.type |= flags_sz_val[s21_strchr(fl_sz, format[*cur]) - fl_sz];
 
@@ -81,22 +70,17 @@ int read_specifier(char *result, char spec, setup_t setup, va_list *params) {
     long double arg = 0;
     long double (*get_arg)(va_list*, int type) = NULL;
 
-    // наполнение точности
     if (setup.accuracy == -1) setup.accuracy = get_accuracy(spec);
 
-    // флаг беззнакового числа
     if (s21_strchr("upoxX", spec)) setup.type |= F_UNSIGNED;
 
-    // присвоение флага заглавных букв
     if (spec < 'Z') setup.flags |= F_UPP;
 
-    // выбор функции для из которой мы получаем аргумент
     if (s21_strchr("diuxXop", spec))
         get_arg = get_int;
     else if (s21_strchr("fgGeE", spec))
         get_arg = get_double, setup.flags |= (F_FLOAT | F_START);
 
-    // предобработка спецификаторов
     if (spec == 'c') {}
     else if (spec == 's') {}
     else if (s21_strchr("xX", spec))
@@ -112,10 +96,8 @@ int read_specifier(char *result, char spec, setup_t setup, va_list *params) {
         setup.accuracy += !setup.accuracy ? 1 : 0;
     }
 
-    // получение аргумента
     if (get_arg) arg = get_arg(params, setup.type);
 
-    // чтение аргумента
     if (spec == '%') 
         result[length++] = '%';
     else if (spec == 'c')
@@ -125,7 +107,6 @@ int read_specifier(char *result, char spec, setup_t setup, va_list *params) {
     else
         length += read_arg(result + length, setup, arg);
     
-    // наполнение нулями
     if (setup.flags & F_ZERO && (!(setup.flags & F_ACCURACY && !(setup.flags & F_FLOAT)) || s21_strchr("cs%", spec)))
         length = format(result + (s21_strchr("+- ", *result) && !s21_strchr("sc", spec) ? 1 : 0), length, setup.width, setup.flags, '0');
     
@@ -175,11 +156,8 @@ int format(char *str, int length, int width, int flags, char ch) {
             str[width] = '\0';
         } else {
             char temp[width + 1];
-            // Заполняем начало исходной строки пробелами
             s21_memset(temp, ch, padding);
-            // Копируем исходную строку в временный буфер после пробелов
             s21_strncpy(temp + padding, str, s21_strlen(str));
-            // Копируем обратно в исходную строку
             s21_strncpy(str, temp, s21_strlen(temp));
         }
     }
@@ -216,7 +194,6 @@ int read_arg(char *str, setup_t setup, long double arg) {
     int start_accuracy = setup.accuracy;
     int length = 0;
 
-    // обработка отрицательных значений и флагов знака и пробела
     if (arg < 0) 
         str[length++] = '-', setup.flags |= F_MINUS, arg = -arg;
     else if (setup.flags & F_PLUS) 
@@ -226,46 +203,35 @@ int read_arg(char *str, setup_t setup, long double arg) {
 
     unsigned long int r_arg = arg;
     
-    // If accuracy is 0 and the value is 0, print nothing
     if (setup.flags & F_ACCURACY && setup.accuracy == 0 && r_arg == 0) {
         return length;
     }
 
-    // Получение кол-ва степеней / нулей, до и после '.'
     int log = setup.flags & (F_GEN | F_MANTISSA) ? r_log(arg) : 0;
 
-    // округление до заданной точности
     if (setup.flags & F_FLOAT)
         r_arg = roundl(arg * pow(10, setup.accuracy - log - (setup.flags & F_GEN ? 1 : 0)));
 
-    // обработка флага F_GEN
     if (setup.flags & F_GEN) {
         setup.accuracy -= log + 1;
 
-        // граничное условие округления 999999.9 / 0.00009999999
         if (log < r_log(r_arg * pow(10, -setup.accuracy)))
             r_arg /= 10, setup.accuracy--, log++;
 
-        // границы спецификатора %d F_GEN
         if (!(log < start_accuracy && log >= -4))
             setup.flags |= F_MANTISSA, setup.accuracy += log;
     }
 
-    // удаление лишних нулей для %g
     if (setup.flags & F_COMPACT)
         for (; r_arg % 10 == 0 && setup.accuracy > 0; r_arg /= 10) setup.accuracy--;
 
     if (!(setup.flags & (F_FLOAT | F_ACCURACY)) && setup.flags & F_ZERO)
         setup.accuracy = setup.width - (setup.flags & (F_MINUS | F_PLUS | F_SPACE) ? 1 : 0);
 
-    // чтение числа в строку
     num_to_string(str, r_arg, &length, setup.accuracy, setup.flags);
 
-    // добавление основания к мантиссе
     if (setup.flags & F_MANTISSA) 
         length += mantissa(str + length, setup, log);
-
-    
 
     return length;
 }

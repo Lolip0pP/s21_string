@@ -7,5 +7,6 @@ char *s21_strcpy(char *dest, const char *src) {
         i++;
     }
     dest[i] = '\0';
+    
     return dest;
 }

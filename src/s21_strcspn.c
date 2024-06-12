@@ -5,5 +5,6 @@ s21_size_t s21_strcspn(const char *str, const char *sym) {
   while (*ptr && !s21_strchr(sym, *ptr)) {
     ptr++;
   }
+  
   return ptr - str;
 }
