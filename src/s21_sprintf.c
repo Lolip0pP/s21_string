@@ -204,9 +204,10 @@ int read_s(char *str, setup_t setup, va_list *params) {
     else
         s21_strcat(str, va_arg(*params, char *));
 
-    int length = setup.flags & F_ACCURACY ? setup.accuracy : s21_strlen(str);
+    int length = (int)s21_strlen(str);
 
-    str[length] = '\0';
+    if (setup.accuracy & F_ACCURACY && length > setup.accuracy)
+        length = setup.accuracy, str[length] = '\0';
 
     return length;
 }
@@ -225,6 +226,11 @@ int read_arg(char *str, setup_t setup, long double arg) {
 
     unsigned long int r_arg = arg;
     
+    // If accuracy is 0 and the value is 0, print nothing
+    if (setup.flags & F_ACCURACY && setup.accuracy == 0 && r_arg == 0) {
+        return length;
+    }
+
     // Получение кол-ва степеней / нулей, до и после '.'
     int log = setup.flags & (F_GEN | F_MANTISSA) ? r_log(arg) : 0;
 
@@ -249,12 +255,17 @@ int read_arg(char *str, setup_t setup, long double arg) {
     if (setup.flags & F_COMPACT)
         for (; r_arg % 10 == 0 && setup.accuracy > 0; r_arg /= 10) setup.accuracy--;
 
+    if (!(setup.flags & (F_FLOAT | F_ACCURACY)) && setup.flags & F_ZERO)
+        setup.accuracy = setup.width - (setup.flags & (F_MINUS | F_PLUS | F_SPACE) ? 1 : 0);
+
     // чтение числа в строку
     num_to_string(str, r_arg, &length, setup.accuracy, setup.flags);
 
     // добавление основания к мантиссе
     if (setup.flags & F_MANTISSA) 
         length += mantissa(str + length, setup, log);
+
+    
 
     return length;
 }
@@ -269,9 +280,9 @@ void num_to_string(char *str, unsigned long int num, int *index, int accuracy, u
     else if (accuracy > 0 || flags & F_HEX || flags & F_OCT) {
         if (flags & F_FLOAT) str[(*index)++] = '0', str[(*index)++] = '.';
 
-        if (flags & F_HEX && flags & F_POINT) str[(*index)++] = '0', str[(*index)++] = flags & F_UPP ? 'X' : 'x';
+        if (flags & F_HEX && flags & F_POINT) str[(*index)++] = '0', str[(*index)++] = flags & F_UPP ? 'X' : 'x', accuracy -= 2;
 
-        if (flags & F_OCT && flags & F_POINT) str[(*index)++] = '0';
+        if (flags & F_OCT && flags & F_POINT) str[(*index)++] = '0', accuracy -= 1;
 
         if (accuracy > 0) s21_memset(str + *index, '0', accuracy - 1), *index += accuracy - 1;
     }
@@ -290,4 +301,3 @@ int mantissa(char *str, setup_t setup, int log) {
     
     return read_arg(str, (setup_t){flags, 0, 2, 0}, log) + 1;
 }
-
