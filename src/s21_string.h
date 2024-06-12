@@ -38,5 +38,10 @@ void *s21_to_upper(const char *str);
 void *s21_to_lower(const char *str);
 int s21_strncasecmp(const char *s1, const char *s2, s21_size_t n);
 int s21_sscanf(const char *str, const char *format, ...);
+void *s21_insert(const char *src, const char *str, size_t start_index);
+void *s21_trim(const char *src, const char *trim_chars);
+int s21_sprintf(char *result, const char *format, ...);
+int s21_find_trim_chars(char c, const char *trim_chars);
+char *s21_strcpy(char *dest, const char *src);
 
 #endif  // S21_STRING_H
