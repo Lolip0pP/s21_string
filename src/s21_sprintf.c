@@ -107,7 +107,7 @@ int read_specifier(char *result, char spec, setup_t setup, va_list *params) {
     else
         length += read_arg(result + length, setup, arg);
     
-    if (setup.flags & F_ZERO && (!(setup.flags & F_ACCURACY && !(setup.flags & F_FLOAT)) || s21_strchr("cs%", spec)))
+    if ((!(setup.flags & F_L_ALIGNMENT) && setup.flags & F_ZERO) && (setup.flags & F_FLOAT || s21_strchr("cs%", spec)))
         length = format(result + (s21_strchr("+- ", *result) && !s21_strchr("sc", spec) ? 1 : 0), length, setup.width, setup.flags, '0');
     
     length = format(result, length, setup.width, setup.flags, ' ');
@@ -265,5 +265,5 @@ int mantissa(char *str, setup_t setup, int log) {
 
     int flags = F_ZERO + F_PLUS + (setup.flags & F_UPP ? F_UPP : 0);
     
-    return read_arg(str, (setup_t){flags, 0, 2, 0}, log) + 1;
+    return read_arg(str, (setup_t){flags, 3, 0, 0}, log) + 1;
 }
