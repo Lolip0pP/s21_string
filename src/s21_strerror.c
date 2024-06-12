@@ -270,6 +270,6 @@ char *s21_strerror(int errnum) {
   } else {
     sprintf(error_message, "Unknown error %d", errnum);
   }
-  
+
   return error_message;
 }

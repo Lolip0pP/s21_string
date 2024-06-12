@@ -20,7 +20,8 @@ typedef struct {
   int precision;
 } type_label_t;
 
-void check_format(const char *str, const char *format, va_list parm, pos_format_t *pf);
+void check_format(const char *str, const char *format, va_list parm,
+                  pos_format_t *pf);
 type_label_t get_signature(const char *format, pos_format_t *pf);
 void cmp_symbol(const char *str, const char *format, pos_format_t *pf);
 int get_size_type(const char *format, s21_size_t *position);
@@ -31,15 +32,20 @@ int is_end_str(char ch);
 int is_spec(char ch);
 int char_to_number(char ch);
 int check_format_base(const char *str, s21_size_t *position);
-long long int str_to_int(const char *str, s21_size_t *position, int base, int width, int *error);
-long double str_to_float(const char *format, pos_format_t *pf, type_label_t type);
-void find_and_set_value(type_label_t type, const char *str, pos_format_t *pf, va_list parm);
+long long int str_to_int(const char *str, s21_size_t *position, int base,
+                         int width, int *error);
+long double str_to_float(const char *format, pos_format_t *pf,
+                         type_label_t type);
+void find_and_set_value(type_label_t type, const char *str, pos_format_t *pf,
+                        va_list parm);
 void make_di(void *label, const char *str, pos_format_t *pf, type_label_t type);
 void make_c(void *label, const char *str, pos_format_t *pf, type_label_t type);
 void make_s(void *label, const char *str, pos_format_t *pf, type_label_t type);
-void make_fGgEe(void *label, const char *str, pos_format_t *pf, type_label_t type);
+void make_fGgEe(void *label, const char *str, pos_format_t *pf,
+                type_label_t type);
 void make_n(void *label, pos_format_t *pf, type_label_t type);
-void make_uoxX(void *label, const char *str, pos_format_t *pf, type_label_t type);
+void make_uoxX(void *label, const char *str, pos_format_t *pf,
+               type_label_t type);
 void make_p(void **label, const char *str, pos_format_t *pf, type_label_t type);
 
 int s21_sscanf(const char *str, const char *format, ...) {
@@ -58,7 +64,8 @@ int s21_sscanf(const char *str, const char *format, ...) {
   return pf.count;
 }
 
-void check_format(const char *str, const char *format, va_list parm, pos_format_t *pf) {
+void check_format(const char *str, const char *format, va_list parm,
+                  pos_format_t *pf) {
   while (is_end_str(format[pf->pos_format])) pf->pos_format++;
   while (is_end_str(str[pf->pos_str])) pf->pos_str++;
 
@@ -72,7 +79,8 @@ void check_format(const char *str, const char *format, va_list parm, pos_format_
     } else {
       cmp_symbol(str, format, pf);
     }
-    if (type.type != 's') while (is_end_str(str[pf->pos_str])) pf->pos_str++;
+    if (type.type != 's')
+      while (is_end_str(str[pf->pos_str])) pf->pos_str++;
   }
 }
 
@@ -88,7 +96,7 @@ void cmp_symbol(const char *str, const char *format, pos_format_t *pf) {
 type_label_t get_signature(const char *format, pos_format_t *pf) {
   type_label_t label = {0};
   label.start = pf->pos_format++;
-  
+
   if (is_flag(format[pf->pos_format])) pf->pos_format++;
 
   if (format[pf->pos_format] == '*') {
@@ -126,8 +134,8 @@ type_label_t get_signature(const char *format, pos_format_t *pf) {
   return label;
 }
 
-void find_and_set_value(type_label_t type, const char *str,
-                        pos_format_t *pf, va_list parm) {
+void find_and_set_value(type_label_t type, const char *str, pos_format_t *pf,
+                        va_list parm) {
   s21_size_t start = pf->pos_str;
   if (type.type == 'p') {
     if (!type.ignor) {
@@ -186,8 +194,10 @@ void make_c(void *label, const char *str, pos_format_t *pf, type_label_t type) {
 
   while (type.width > 0) {
     if (type.size == 0) {
-      if (!type.ignor) *((char *)label + offset) = str[pf->pos_str++];
-      else pf->pos_str++;
+      if (!type.ignor)
+        *((char *)label + offset) = str[pf->pos_str++];
+      else
+        pf->pos_str++;
     } else if (type.size == 1) {
       wchar_t ch;
       int bytes_read = mbtowc(&ch, str + pf->pos_str, MB_CUR_MAX);
@@ -206,7 +216,7 @@ void make_c(void *label, const char *str, pos_format_t *pf, type_label_t type) {
 }
 
 void make_di(void *label, const char *str, pos_format_t *pf,
-            type_label_t type) {
+             type_label_t type) {
   long long int value = 0;
   int error = 0;
   if (type.type == 'd')
@@ -228,7 +238,8 @@ void make_di(void *label, const char *str, pos_format_t *pf,
   }
 }
 
-void make_uoxX(void *label, const char *str, pos_format_t *pf, type_label_t type) {
+void make_uoxX(void *label, const char *str, pos_format_t *pf,
+               type_label_t type) {
   long long unsigned int value = 0;
   int error = 0;
   if (type.type == 'u') {
@@ -240,11 +251,16 @@ void make_uoxX(void *label, const char *str, pos_format_t *pf, type_label_t type
   }
   pf->error = error;
   if (!type.ignor) {
-    if (type.size == 0) *((unsigned int *)label) = (unsigned int)value;
-    else if (type.size == 1) *((long unsigned int *)label) = (long unsigned int)value;
-    else if (type.size == 2) *((long long unsigned int *)label) = (long long unsigned int)value;
-    else if (type.size == 3) *((short unsigned int *)label) = (short unsigned int)value;
-    else if (type.size == 4) *((unsigned char *)label) = (unsigned char)value;
+    if (type.size == 0)
+      *((unsigned int *)label) = (unsigned int)value;
+    else if (type.size == 1)
+      *((long unsigned int *)label) = (long unsigned int)value;
+    else if (type.size == 2)
+      *((long long unsigned int *)label) = (long long unsigned int)value;
+    else if (type.size == 3)
+      *((short unsigned int *)label) = (short unsigned int)value;
+    else if (type.size == 4)
+      *((unsigned char *)label) = (unsigned char)value;
   }
 }
 
@@ -280,17 +296,23 @@ void make_s(void *label, const char *str, pos_format_t *pf, type_label_t type) {
   }
 }
 
-void make_fGgEe(void *label, const char *str, pos_format_t *pf, type_label_t type) {
+void make_fGgEe(void *label, const char *str, pos_format_t *pf,
+                type_label_t type) {
   long double value = str_to_float(str, pf, type);
   if (!type.ignor) {
-    if (type.size == 0) *((float *)label) = (float)value;
-    else if (type.size == 1) *((double *)label) = (double)value;
-    else if (type.size == 2) *((long double *)label) = (long double)value;
+    if (type.size == 0)
+      *((float *)label) = (float)value;
+    else if (type.size == 1)
+      *((double *)label) = (double)value;
+    else if (type.size == 2)
+      *((long double *)label) = (long double)value;
   }
 }
 
-void make_p(void **label, const char *str, pos_format_t *pf, type_label_t type) {
-  long long int value = str_to_int(str, &pf->pos_str, 16, type.width, &pf->error);
+void make_p(void **label, const char *str, pos_format_t *pf,
+            type_label_t type) {
+  long long int value =
+      str_to_int(str, &pf->pos_str, 16, type.width, &pf->error);
   if (!type.ignor) {
     *label = (void *)value;
   }
@@ -317,7 +339,8 @@ void make_n(void *label, pos_format_t *pf, type_label_t type) {
   }
 }
 
-long double str_to_float(const char *format, pos_format_t *pf, type_label_t type) {
+long double str_to_float(const char *format, pos_format_t *pf,
+                         type_label_t type) {
   int sign = 1;
   long double result = 0.0;
   int exp_sign = 1;
@@ -347,84 +370,86 @@ long double str_to_float(const char *format, pos_format_t *pf, type_label_t type
     }
   }
 
+  while (is_digital(format[*position], 10) && width > 0) {
+    result = result * 10.0 + (format[*position] - '0');
+    (*position)++;
+    width--;
+  }
+
+  if (format[*position] == '.' && width > 0) {
+    (*position)++;
+    width--;
     while (is_digital(format[*position], 10) && width > 0) {
-      result = result * 10.0 + (format[*position] - '0');
+      decimal_part = decimal_part * 10 + (format[*position] - '0');
+      decimal_digits++;
       (*position)++;
       width--;
     }
+    result += (long double)decimal_part / powl(10, decimal_digits);
+  }
 
-    if (format[*position] == '.' && width > 0) {
+  if ((format[*position] == 'E' || format[*position] == 'e') && width > 0) {
+    (*position)++;
+    width--;
+    if (format[*position] == '-' && width > 0) {
+      exp_sign = -1;
       (*position)++;
       width--;
-      while (is_digital(format[*position], 10) && width > 0) {
-        decimal_part = decimal_part * 10 + (format[*position] - '0');
-        decimal_digits++;
-        (*position)++;
-        width--;
-      }
-      result += (long double)decimal_part / powl(10, decimal_digits);
-    }
-
-    if ((format[*position] == 'E' || format[*position] == 'e') && width > 0) {
+    } else if (format[*position] == '+' && width > 0) {
       (*position)++;
       width--;
-      if (format[*position] == '-' && width > 0) {
-        exp_sign = -1;
-        (*position)++;
-        width--;
-      } else if (format[*position] == '+' && width > 0) {
-        (*position)++;
-        width--;
-      }
-      while (is_digital(format[*position], 10) && width > 0) {
-        exponent = exponent * 10 + (format[*position] - '0');
-        (*position)++;
-        width--;
-      }
-      result *= powl(10, exp_sign * exponent);
     }
+    while (is_digital(format[*position], 10) && width > 0) {
+      exponent = exponent * 10 + (format[*position] - '0');
+      (*position)++;
+      width--;
+    }
+    result *= powl(10, exp_sign * exponent);
+  }
 
-    return sign * result;
+  return sign * result;
 }
 
-long long int str_to_int(const char *str, s21_size_t *position, int base, int width, int *error) {
-    long long int value = 0;
-    int sign_multiplier = 1;
-    int digital = 0;
+long long int str_to_int(const char *str, s21_size_t *position, int base,
+                         int width, int *error) {
+  long long int value = 0;
+  int sign_multiplier = 1;
+  int digital = 0;
 
-    if (width == 0) width = DEFAULT_WIDTH;
+  if (width == 0) width = DEFAULT_WIDTH;
 
-    if (str[*position] == '-') {
-        sign_multiplier = -1;
-        (*position)++;
-        width--;
-    } else if (str[*position] == '+') {
-        (*position)++;
-        width--;
-    }
+  if (str[*position] == '-') {
+    sign_multiplier = -1;
+    (*position)++;
+    width--;
+  } else if (str[*position] == '+') {
+    (*position)++;
+    width--;
+  }
 
-    if (base == 0) base = check_format_base(str, position);
+  if (base == 0) base = check_format_base(str, position);
 
-    if (base == 16 && str[*position] == '0' && (str[*position + 1] == 'x' || str[*position + 1] == 'X')) {
-        (*position) += 2;
-        width -= 2;
-        digital = 1;
-    } else if (base == 8 && str[*position] == '0') {
-        (*position)++;
-        width--;
-        digital = 1;
-    }
+  if (base == 16 && str[*position] == '0' &&
+      (str[*position + 1] == 'x' || str[*position + 1] == 'X')) {
+    (*position) += 2;
+    width -= 2;
+    digital = 1;
+  } else if (base == 8 && str[*position] == '0') {
+    (*position)++;
+    width--;
+    digital = 1;
+  }
 
-    while (is_digital(str[*position], base) && width > 0) {
-        if (value != 0) value *= base;
-        value += char_to_number(str[(*position)++]);
-        digital++;
-        width--;
-    }
+  while (is_digital(str[*position], base) && width > 0) {
+    if (value != 0) value *= base;
+    value += char_to_number(str[(*position)++]);
+    digital++;
+    width--;
+  }
 
-    if (digital == 0 && error != s21_NULL) *error = 12;
+  if (digital == 0 && error != s21_NULL) *error = 12;
 
-    return value * sign_multiplier;
+  return value * sign_multiplier;
 }
 
 int check_format_base(const char *str, s21_size_t *position) {
@@ -454,25 +479,27 @@ int is_flag(char ch) {
   return (ch == '-' || ch == '+' || ch == ' ' || ch == '#' || ch == '0');
 }
 
-int is_size(char ch) {
-  return (ch == 'h' || ch == 'l' || ch == 'L');
-}
+int is_size(char ch) { return (ch == 'h' || ch == 'l' || ch == 'L'); }
 
 int is_end_str(char ch) {
   return (ch == '\0' || ch == '\n' || ch == '\t' || ch == ' ');
 }
 
 int is_spec(char ch) {
-  return (ch == 'd' || ch == 'i' || ch == 'o' || ch == 'u' || ch == 'x' || ch == 'X' || ch == 'f' || ch == 'F' ||
-          ch == 'e' || ch == 'E' || ch == 'g' || ch == 'G' || ch == 'a' || ch == 'A' || ch == 'c' || ch == 's' ||
-          ch == 'p' || ch == 'n' || ch == '%');
+  return (ch == 'd' || ch == 'i' || ch == 'o' || ch == 'u' || ch == 'x' ||
+          ch == 'X' || ch == 'f' || ch == 'F' || ch == 'e' || ch == 'E' ||
+          ch == 'g' || ch == 'G' || ch == 'a' || ch == 'A' || ch == 'c' ||
+          ch == 's' || ch == 'p' || ch == 'n' || ch == '%');
 }
 
 int char_to_number(char ch) {
   int number = 0;
-  if (ch >= '0' && ch <= '9') number = ch - '0';
-  else if (ch >= 'a' && ch <= 'f') number = ch - 'a' + 10;
-  else if (ch >= 'A' && ch <= 'F') number = ch - 'A' + 10;
+  if (ch >= '0' && ch <= '9')
+    number = ch - '0';
+  else if (ch >= 'a' && ch <= 'f')
+    number = ch - 'a' + 10;
+  else if (ch >= 'A' && ch <= 'F')
+    number = ch - 'A' + 10;
   return number;
 }
 
@@ -483,7 +510,7 @@ int get_size_type(const char *format, s21_size_t *position) {
     size = format[*position] == 'h' ? (++(*position), 4) : 3;
   } else if (format[*position] == 'l') {
     (*position)++;
-    size =  format[*position] == 'l' ? (++(*position), 2) : 1;
+    size = format[*position] == 'l' ? (++(*position), 2) : 1;
   } else if (format[*position] == 'L') {
     (*position)++;
     size = 2;

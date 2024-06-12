@@ -6,10 +6,10 @@
 #include <locale.h>
 #include <math.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <wchar.h>
-#include <stddef.h>
 
 #define s21_NULL ((void *)0)
 #define S21_INF (1.0 / 0.0)
